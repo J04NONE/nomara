@@ -1,0 +1,32 @@
+{
+  "name": "nomara",
+  "version": "1.0.0",
+  "description": "Nomara es un proyecto para la materia construcciíon de un motor especializado de cumplimiento (Compliance Engine) diseñado para automatizar la liquidación de nómina electrónica en Pymes colombianas. El proyecto aborda la complejidad de la Reforma Laboral 2026 (Ley 2466) y la Ley 2101, automatizando la segmentación cronológica de turnos rotativos en operaciones 7x24.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/J04NONE/nomara.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/J04NONE/nomara/issues"
+  },
+  "homepage": "https://github.com/J04NONE/nomara#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^6.0.3"
+  }
+}

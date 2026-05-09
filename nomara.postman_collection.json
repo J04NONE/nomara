@@ -1,0 +1,249 @@
+{
+  "info": {
+    "_postman_id": "nomara-api-v1",
+    "name": "Nomara API — Taller 3",
+    "description": "Colección de pruebas para la API REST de Nomara — Compliance Engine para Nómina Electrónica. Proyecto Construcción de Software, Universidad Antonio Nariño 2026.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Empleados",
+      "item": [
+        {
+          "name": "POST Crear Empleado",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/empleados", "host": ["{{baseUrl}}"], "path": ["api","v1","empleados"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipoDoc\": \"CC\",\n  \"numDoc\": \"55512345\",\n  \"nombre\": \"Laura Vargas Pinto\",\n  \"sueldoBase\": 1800000,\n  \"rol\": \"COLABORADOR\",\n  \"fechaIngreso\": \"2026-01-10\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Crear Empleado — 400 sin campos",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/empleados", "host": ["{{baseUrl}}"], "path": ["api","v1","empleados"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipoDoc\": \"CC\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Crear Empleado — 409 duplicado",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/empleados", "host": ["{{baseUrl}}"], "path": ["api","v1","empleados"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipoDoc\": \"CC\",\n  \"numDoc\": \"1023456789\",\n  \"nombre\": \"Duplicado Test\",\n  \"sueldoBase\": 1500000,\n  \"fechaIngreso\": \"2026-01-01\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Listar Empleados",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/empleados", "host": ["{{baseUrl}}"], "path": ["api","v1","empleados"] }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Listar Empleados — filtro estado=ACTIVO",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/empleados?estado=ACTIVO",
+              "host": ["{{baseUrl}}"],
+              "path": ["api","v1","empleados"],
+              "query": [{ "key": "estado", "value": "ACTIVO" }]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Empleado por ID — seed emp-001",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/empleados/emp-001", "host": ["{{baseUrl}}"], "path": ["api","v1","empleados","emp-001"] }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Empleado por ID — 404 no existe",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/empleados/no-existe", "host": ["{{baseUrl}}"], "path": ["api","v1","empleados","no-existe"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Turnos",
+      "item": [
+        {
+          "name": "POST Turno T8 — Dom 22:00 → Lun 06:00 (HU-01 ★)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/turnos", "host": ["{{baseUrl}}"], "path": ["api","v1","turnos"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"empleadoId\": \"emp-002\",\n  \"horaEntrada\": \"2026-06-07T22:00:00\",\n  \"horaSalida\": \"2026-06-08T06:00:00\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Turno ordinario — Lun 08:00 → 16:00",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/turnos", "host": ["{{baseUrl}}"], "path": ["api","v1","turnos"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"empleadoId\": \"emp-001\",\n  \"horaEntrada\": \"2026-06-08T08:00:00\",\n  \"horaSalida\": \"2026-06-08T16:00:00\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Turno — 404 empleado no existe",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/turnos", "host": ["{{baseUrl}}"], "path": ["api","v1","turnos"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"empleadoId\": \"emp-999\",\n  \"horaEntrada\": \"2026-06-08T08:00:00\",\n  \"horaSalida\": \"2026-06-08T16:00:00\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Listar Turnos",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/turnos", "host": ["{{baseUrl}}"], "path": ["api","v1","turnos"] }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Turnos por empleado — emp-002",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/turnos?empleadoId=emp-002",
+              "host": ["{{baseUrl}}"],
+              "path": ["api","v1","turnos"],
+              "query": [{ "key": "empleadoId", "value": "emp-002" }]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Vigencias Normativas",
+      "item": [
+        {
+          "name": "GET Listar Vigencias",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/vigencias", "host": ["{{baseUrl}}"], "path": ["api","v1","vigencias"] }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Crear Vigencia — Ley 2101 fase 3",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/vigencias", "host": ["{{baseUrl}}"], "path": ["api","v1","vigencias"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fechaInicio\": \"2027-01-01\",\n  \"divisor\": 205,\n  \"pctNocturno\": 35,\n  \"pctDominical\": 90\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Crear Vigencia — 409 fecha duplicada",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/vigencias", "host": ["{{baseUrl}}"], "path": ["api","v1","vigencias"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fechaInicio\": \"2026-01-01\",\n  \"divisor\": 220,\n  \"pctNocturno\": 35,\n  \"pctDominical\": 80\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Liquidaciones",
+      "item": [
+        {
+          "name": "GET Liquidación empleado emp-002",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/liquidaciones/emp-002", "host": ["{{baseUrl}}"], "path": ["api","v1","liquidaciones","emp-002"] }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Liquidación con filtro periodo 2026-06",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/liquidaciones/emp-002?periodo=2026-06",
+              "host": ["{{baseUrl}}"],
+              "path": ["api","v1","liquidaciones","emp-002"],
+              "query": [{ "key": "periodo", "value": "2026-06" }]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Liquidación — 404 empleado no existe",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/liquidaciones/no-existe", "host": ["{{baseUrl}}"], "path": ["api","v1","liquidaciones","no-existe"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "GET Health Check",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/health", "host": ["{{baseUrl}}"], "path": ["health"] }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
