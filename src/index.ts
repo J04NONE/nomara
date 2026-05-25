@@ -5,6 +5,7 @@ import vigenciasRouter from './routes/vigencias.routes';
 import liquidacionesRouter from './routes/liquidaciones.routes';
 import { errorHandler } from './middleware/errorHandler';
 import { notFound } from './middleware/notFound';
+import { testConnection, initializeTables } from './config/database';
 
 const app = express();
 const PORT = process.env['PORT'] ?? 3000;
@@ -23,7 +24,9 @@ app.use('/api/v1/liquidaciones', liquidacionesRouter);
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  await testConnection();
+  await initializeTables();
   console.log(`Nomara API corriendo en http://localhost:${PORT}`);
   console.log(`Health check: http://localhost:${PORT}/health`);
 });
