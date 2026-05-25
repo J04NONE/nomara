@@ -21,8 +21,27 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Claude Code
+# Python — entorno virtual y caché (solo contexto local)
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.Python
+
+# MCP servers — solo contexto local, no van al repo
+mcp-servers/
+
+# Claude Code — configuración y contexto local
+.mcp.json
 .claude/
+task_plan.md
+
+# Documentos de contexto del proyecto (locales)
+Nomara_Documento_Maestro.md
+Nomara_Todos_los_documentos.md
+ManualSkills.md
 
 # Documentos del proyecto (PDFs y Word)
 *.pdf

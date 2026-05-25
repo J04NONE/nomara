@@ -1,6 +1,5 @@
 import { Segmento, TipoHora } from '../models/segmento.model';
 import { VigenciaNormativa } from '../models/vigencia.model';
-import { store } from '../store';
 
 const COL_OFFSET_MS = -5 * 3_600_000; // UTC-5
 
@@ -34,12 +33,12 @@ function siguienteMedianocheCol(utcDate: Date): Date {
   return new Date(colMidnight.getTime() - COL_OFFSET_MS);
 }
 
-export function getVigenciaActiva(utcDate: Date): VigenciaNormativa {
+export function getVigenciaActiva(utcDate: Date, vigencias: VigenciaNormativa[]): VigenciaNormativa {
   const fechaCol = colombiaDateStr(utcDate);
-  const vigencias = [...store.vigencias].sort((a, b) =>
+  const sorted = [...vigencias].sort((a, b) =>
     b.fechaInicio.localeCompare(a.fechaInicio)
   );
-  const vigencia = vigencias.find((v) => v.fechaInicio <= fechaCol);
+  const vigencia = sorted.find((v) => v.fechaInicio <= fechaCol);
   if (!vigencia) throw new Error(`Sin vigencia normativa activa para la fecha ${fechaCol}`);
   return vigencia;
 }
@@ -94,7 +93,8 @@ export function segmentarTurno(
   turnoId: string,
   entrada: Date,
   salida: Date,
-  sueldoBase: number
+  sueldoBase: number,
+  vigencias: VigenciaNormativa[]
 ): Segmento[] {
   if (salida <= entrada) {
     throw new Error('La hora de salida debe ser posterior a la hora de entrada');
@@ -108,7 +108,7 @@ export function segmentarTurno(
     const finSegmento = corte < salida ? corte : salida;
 
     const horas = redondear((finSegmento.getTime() - cursor.getTime()) / 3_600_000);
-    const vigencia = getVigenciaActiva(cursor);
+    const vigencia = getVigenciaActiva(cursor, vigencias);
     const valorHoraBase = redondear(sueldoBase / vigencia.divisor);
     const tipoHora = getTipoHora(cursor);
     const recargoAplicado = calcularRecargo(tipoHora, vigencia);

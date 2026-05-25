@@ -1,17 +1,27 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { store } from '../store';
+import pool from '../config/database';
 import { CreateVigenciaDto, VigenciaNormativa } from '../models/vigencia.model';
 
 const router = Router();
 
-router.get('/', (_req: Request, res: Response): void => {
-  const ordenadas = [...store.vigencias].sort((a, b) =>
-    a.fechaInicio.localeCompare(b.fechaInicio)
-  );
-  res.json(ordenadas);
+const SELECT_VIGENCIA = `
+  SELECT id, fecha_inicio::text AS "fechaInicio", divisor,
+         pct_nocturno AS "pctNocturno", pct_dominical AS "pctDominical"
+  FROM vigencias_normativas
+`;
+
+router.get('/', async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { rows } = await pool.query<VigenciaNormativa>(
+      `${SELECT_VIGENCIA} ORDER BY fecha_inicio ASC`
+    );
+    res.json(rows);
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.post('/', (req: Request, res: Response, next: NextFunction): void => {
+router.post('/', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const dto = req.body as CreateVigenciaDto;
 
@@ -25,22 +35,25 @@ router.post('/', (req: Request, res: Response, next: NextFunction): void => {
       return;
     }
 
-    const duplicada = store.vigencias.find((v) => v.fechaInicio === dto.fechaInicio);
-    if (duplicada) {
+    const { rowCount } = await pool.query(
+      'SELECT 1 FROM vigencias_normativas WHERE fecha_inicio = $1',
+      [dto.fechaInicio]
+    );
+    if (rowCount && rowCount > 0) {
       res.status(409).json({ error: `Ya existe una vigencia con fechaInicio ${dto.fechaInicio}` });
       return;
     }
 
-    const nueva: VigenciaNormativa = {
-      id: crypto.randomUUID(),
-      fechaInicio: dto.fechaInicio,
-      divisor: dto.divisor,
-      pctNocturno: dto.pctNocturno,
-      pctDominical: dto.pctDominical,
-    };
+    const id = crypto.randomUUID();
+    const { rows } = await pool.query<VigenciaNormativa>(
+      `INSERT INTO vigencias_normativas (id, fecha_inicio, divisor, pct_nocturno, pct_dominical)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING id, fecha_inicio::text AS "fechaInicio", divisor,
+                 pct_nocturno AS "pctNocturno", pct_dominical AS "pctDominical"`,
+      [id, dto.fechaInicio, dto.divisor, dto.pctNocturno, dto.pctDominical]
+    );
 
-    store.vigencias.push(nueva);
-    res.status(201).json(nueva);
+    res.status(201).json(rows[0]);
   } catch (err) {
     next(err);
   }
