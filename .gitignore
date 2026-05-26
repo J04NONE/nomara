@@ -47,3 +47,20 @@ ManualSkills.md
 *.pdf
 *.docx
 *.doc
+
+# Seguridad — credenciales, tokens y llaves privadas
+*.pem
+*.key
+*.cert
+*.p12
+*.pfx
+credentials*
+secrets*
+*.token
+*.secret
+config.local.*
+**/service-account*.json
+*.cred
+*.credential
+secret-key*
+api-key*
