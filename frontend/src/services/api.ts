@@ -28,7 +28,7 @@ export const healthAPI = {
 // === Empleados ===
 export const empleadosAPI = {
   getAll: (estado?: string) => {
-    const params = estado ? `?estado=${estado}` : ''
+    const params = estado ? `?${new URLSearchParams({ estado })}` : ''
     return fetchJSON<Empleado[]>(`/empleados${params}`)
   },
   getById: (id: string) => fetchJSON<Empleado>(`/empleados/${id}`),
@@ -64,7 +64,7 @@ export const vigenciasAPI = {
 // === Liquidaciones ===
 export const liquidacionesAPI = {
   getByEmpleado: (empleadoId: string, periodo?: string) => {
-    const params = periodo ? `?periodo=${periodo}` : ''
+    const params = periodo ? `?${new URLSearchParams({ periodo })}` : ''
     return fetchJSON<LiquidacionResumen>(`/liquidaciones/${empleadoId}${params}`)
   },
 }
