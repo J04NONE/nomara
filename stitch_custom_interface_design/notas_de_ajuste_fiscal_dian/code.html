@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notas de Ajuste - Nomara</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-tint": "#a2c9ff",
+                        "secondary-fixed-dim": "#b1c7f2",
+                        "status-critical": "#FF4D4D",
+                        "outline-variant": "#404752",
+                        "on-tertiary-fixed": "#001f24",
+                        "primary": "#a2c9ff",
+                        "on-primary-container": "#003765",
+                        "error-container": "#93000a",
+                        "surface-container-highest": "#333539",
+                        "on-surface-variant": "#c0c7d4",
+                        "tertiary-container": "#00afc3",
+                        "surface-variant": "#333539",
+                        "on-secondary-fixed-variant": "#31476b",
+                        "primary-container": "#4da2ff",
+                        "status-success": "#00F08F",
+                        "inverse-primary": "#0060aa",
+                        "on-surface": "#e2e2e8",
+                        "primary-fixed-dim": "#a2c9ff",
+                        "inverse-on-surface": "#2f3035",
+                        "status-warning": "#FFB800",
+                        "secondary-container": "#31476b",
+                        "surface-container": "#1e2024",
+                        "tertiary-fixed": "#9cf0ff",
+                        "on-tertiary-fixed-variant": "#004f58",
+                        "on-tertiary": "#00363d",
+                        "surface-container-high": "#282a2e",
+                        "primary-fixed": "#d3e4ff",
+                        "on-secondary-fixed": "#001b3d",
+                        "on-primary": "#00315c",
+                        "secondary": "#b1c7f2",
+                        "on-error": "#690005",
+                        "on-error-container": "#ffdad6",
+                        "surface-card": "#12161F",
+                        "secondary-fixed": "#d6e3ff",
+                        "tertiary": "#00daf3",
+                        "on-primary-fixed": "#001c38",
+                        "on-primary-fixed-variant": "#004881",
+                        "surface": "#111318",
+                        "surface-bright": "#37393e",
+                        "on-secondary-container": "#a0b6e0",
+                        "on-secondary": "#193053",
+                        "border-muted": "#232833",
+                        "inverse-surface": "#e2e2e8",
+                        "surface-container-low": "#1a1c20",
+                        "tertiary-fixed-dim": "#00daf3",
+                        "surface-container-lowest": "#0c0e12",
+                        "error": "#ffb4ab",
+                        "on-tertiary-container": "#003c44",
+                        "on-background": "#e2e2e8",
+                        "outline": "#8a919d",
+                        "text-dimmed": "#8E97A4",
+                        "background": "#111318",
+                        "surface-dim": "#111318"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.125rem",
+                        lg: "0.25rem",
+                        xl: "0.5rem",
+                        full: "0.75rem"
+                    },
+                    spacing: {
+                        "margin-mobile": "16px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "container-max": "1440px",
+                        "margin-desktop": "32px"
+                    },
+                    fontFamily: {
+                        "headline-md-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "display-lg": ["Inter"],
+                        "body-base": ["Inter"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    fontSize: {
+                        "headline-md-mobile": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "data-mono": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "body-base": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.08em", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        /* Webkit scrollbar for technical look */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: theme('colors.surface-container'); }
+        ::-webkit-scrollbar-thumb { background: theme('colors.surface-bright'); border-radius: theme('borderRadius.DEFAULT'); }
+        ::-webkit-scrollbar-thumb:hover { background: theme('colors.outline'); }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col md:flex-row">
+<!-- SideNavBar (Desktop) -->
+<nav aria-label="Sidebar Navigation" class="hidden md:flex bg-surface-container dark:bg-surface-container text-primary font-label-caps text-label-caps font-headline-md text-headline-md text-primary h-screen w-64 flex-col fixed left-0 top-0 border-r border-muted flat no shadows flex flex-col h-full py-6 group cursor-pointer">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-primary tracking-tight">Nomara</div>
+<div class="font-label-caps text-label-caps text-text-dimmed mt-1">Compliance Engine</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-text-dimmed hover:bg-surface-variant hover:text-on-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-text-dimmed hover:bg-surface-variant hover:text-on-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">gavel</span>
+<span>Compliance</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-text-dimmed hover:bg-surface-variant hover:text-on-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">schedule</span>
+<span>Shifts</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-text-dimmed hover:bg-surface-variant hover:text-on-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span>Employees</span>
+</a>
+</li>
+<li>
+<!-- Active State mapped conceptually to Audit/Correction -->
+<a aria-current="page" class="flex items-center gap-3 px-6 py-3 text-primary border-r-2 border-primary bg-primary/5 transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Audit</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mt-auto">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-text-dimmed hover:bg-surface-variant hover:text-on-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span>Support</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-text-dimmed hover:bg-surface-variant hover:text-on-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Sign Out</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- TopAppBar (Mobile & Desktop) -->
+<header class="bg-surface/80 dark:bg-surface/80 backdrop-blur-md text-primary font-body-base text-body-base font-headline-md text-headline-md font-bold text-primary w-full sticky top-0 z-40 border-b border-muted flat no shadows flex justify-between items-center px-6 h-16 w-full cursor-pointer active:opacity-80">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined md:hidden text-on-surface-variant">menu</span>
+<div class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Nomara</div>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button aria-label="notifications" class="hover:text-primary-container transition-colors p-2">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button aria-label="settings" class="hover:text-primary-container transition-colors p-2">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-bright border border-muted overflow-hidden ml-2">
+<img alt="User profile photo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhXGRP2k2uXPlktEu4wTSzPcJnjKxarKeO6mFhtHav4aB-tzEYup2sTOTgWiKCD4m9LGD2507phVB3cYtf_C_NrqwZ1mVHSyX45mryuQWUdPIvBug9TTn6rOfMAxZuhkBfMgw83CQfq64dbRSxZ4o9ZCeUtusk6V7Flygy-66Lr3YiUmdsdhe1e08roLmGKaOfk5kU9eBJvRbSj5l6-9PoVN2SZW3wYN0_6t5AZy8cXXOuVd_zn83PuJMFxRquieDkMoqJpOkiX5c"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="flex-1 p-margin-mobile md:p-margin-desktop max-w-container-max mx-auto w-full flex flex-col gap-6">
+<!-- Context Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-muted pb-4">
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-status-warning">edit_document</span>
+                        Terminal: Notas de Ajuste
+                    </h1>
+<p class="font-body-base text-body-base text-text-dimmed mt-1">Corrección de documentos XML transmitidos (RF-09)</p>
+</div>
+<div class="font-data-mono text-data-mono text-text-dimmed bg-surface-container px-3 py-1 rounded border border-muted flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-status-success inline-block"></span>
+                    DIAN Gateway: Online
+                </div>
+</div>
+<!-- Warning Banner -->
+<div class="bg-error-container/10 border border-status-critical/30 rounded-lg p-4 flex gap-4 items-start">
+<span class="material-symbols-outlined text-status-critical mt-0.5">warning</span>
+<div>
+<h3 class="font-label-caps text-label-caps text-status-critical mb-1">Zona de Riesgo Operativo</h3>
+<p class="font-body-base text-body-base text-on-surface-variant text-sm">La generación de una nota de reemplazo invalidará el documento CUNE anterior en el sistema de la DIAN. Esta acción es auditable e inmutable.</p>
+</div>
+</div>
+<!-- Main Layout Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+<!-- Left Column: Search & Current Data -->
+<div class="xl:col-span-4 flex flex-col gap-6">
+<!-- Search Box -->
+<div class="bg-surface-card border border-muted rounded-lg p-6 flex flex-col gap-4">
+<h2 class="font-label-caps text-label-caps text-primary flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 16px;">search</span>
+                            Localizador de Documento
+                        </h2>
+<div class="flex flex-col gap-2">
+<label class="font-data-mono text-data-mono text-text-dimmed text-xs" for="cune-search">CUNE o ID Empleado</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-dimmed group-focus-within:text-primary">tag</span>
+<input class="w-full bg-surface-container border border-muted rounded text-on-surface font-data-mono text-data-mono pl-10 pr-3 py-2 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all placeholder:text-surface-bright" id="cune-search" placeholder="Ej: 9a8b7c6d5e4f3g2h..." type="text" value="CUNE-2023-11-88492"/>
+</div>
+</div>
+<button class="w-full bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 hover:border-primary/40 font-body-base text-body-base font-medium py-2 rounded transition-all flex items-center justify-center gap-2">
+                            Cargar Documento Base
+                        </button>
+</div>
+<!-- Original Data Summary -->
+<div class="bg-surface-card border border-muted rounded-lg flex flex-col overflow-hidden">
+<div class="bg-surface-container border-b border-muted p-4 flex justify-between items-center">
+<h2 class="font-label-caps text-label-caps text-text-dimmed">Datos Transmitidos (Original)</h2>
+<span class="font-label-caps text-label-caps text-status-success bg-status-success/10 px-2 py-0.5 rounded border border-status-success/20 flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 12px;">lock</span>
+                                Firmado
+                            </span>
+</div>
+<div class="p-4 flex flex-col gap-3 font-data-mono text-data-mono text-sm">
+<div class="flex justify-between border-b border-muted/50 pb-2">
+<span class="text-text-dimmed">ID Empleado</span>
+<span class="text-on-surface">EMP-8472</span>
+</div>
+<div class="flex justify-between border-b border-muted/50 pb-2">
+<span class="text-text-dimmed">Periodo</span>
+<span class="text-on-surface">2023-10</span>
+</div>
+<div class="flex justify-between border-b border-muted/50 pb-2">
+<span class="text-text-dimmed">Devengos</span>
+<span class="text-on-surface">$4,500,000.00</span>
+</div>
+<div class="flex justify-between border-b border-muted/50 pb-2">
+<span class="text-text-dimmed">Deducciones</span>
+<span class="text-on-surface text-status-critical">-$350,000.00</span>
+</div>
+<div class="flex justify-between pt-1">
+<span class="text-text-dimmed">Neto Pagado</span>
+<span class="text-primary font-bold">$4,150,000.00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Adjustments Workspace -->
+<div class="xl:col-span-8 flex flex-col gap-6">
+<div class="bg-surface-card border border-muted rounded-lg flex flex-col h-full">
+<div class="bg-surface-container border-b border-muted p-4 flex justify-between items-center">
+<h2 class="font-label-caps text-label-caps text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 16px;">difference</span>
+                                Panel de Modificación
+                            </h2>
+<span class="font-label-caps text-label-caps text-status-warning bg-status-warning/10 px-2 py-0.5 rounded border border-status-warning/20">Borrador</span>
+</div>
+<div class="p-6 flex flex-col gap-8">
+<!-- Concept Adjustments Table -->
+<div class="flex flex-col gap-3">
+<h3 class="font-body-base text-body-base font-semibold text-on-surface">Vectores de Ajuste</h3>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-data-mono text-data-mono text-sm">
+<thead>
+<tr class="text-text-dimmed border-b border-muted">
+<th class="pb-2 font-normal w-1/3">Concepto</th>
+<th class="pb-2 font-normal text-right">Original</th>
+<th class="pb-2 font-normal text-right">Ajuste (+/-)</th>
+<th class="pb-2 font-normal text-right">Nuevo Valor</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-muted/50">
+<tr>
+<td class="py-3 text-on-surface">Horas Extras Nocturnas</td>
+<td class="py-3 text-right text-text-dimmed">$150,000.00</td>
+<td class="py-3 text-right">
+<input class="w-24 bg-surface-container border border-muted rounded text-right text-on-surface px-2 py-1 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50" type="text" value="+50000.00"/>
+</td>
+<td class="py-3 text-right text-tertiary font-bold">$200,000.00</td>
+</tr>
+<tr>
+<td class="py-3 text-on-surface">Auxilio Transporte</td>
+<td class="py-3 text-right text-text-dimmed">$140,606.00</td>
+<td class="py-3 text-right">
+<input class="w-24 bg-surface-container border border-muted rounded text-right text-on-surface px-2 py-1 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50" disabled="" type="text" value="0.00"/>
+</td>
+<td class="py-3 text-right text-text-dimmed">$140,606.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex justify-end pt-2">
+<div class="font-data-mono text-data-mono text-sm flex gap-4 bg-surface-container px-4 py-2 rounded border border-muted">
+<span class="text-text-dimmed">Nuevo Neto Proyectado:</span>
+<span class="text-primary font-bold">$4,200,000.00</span>
+</div>
+</div>
+</div>
+<!-- Justification Text Area -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="font-label-caps text-label-caps text-text-dimmed flex items-center gap-2" for="justification">
+                                        Justificación Legal <span class="text-status-critical">*</span>
+</label>
+<span class="font-data-mono text-data-mono text-xs text-status-warning" id="char-count">13 / 30 min chars</span>
+</div>
+<textarea class="w-full bg-surface-container border border-status-warning/50 rounded text-on-surface font-body-base text-body-base p-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 resize-none" id="justification" placeholder="Ingrese el motivo normativo o contable del ajuste..." rows="4">Error de tip</textarea>
+<p class="font-data-mono text-data-mono text-xs text-text-dimmed mt-1">Esta justificación será incluida en el nodo &lt;Notas&gt; del XML según anexo técnico DIAN.</p>
+</div>
+<!-- Action Bar -->
+<div class="border-t border-muted pt-6 flex flex-col sm:flex-row justify-end gap-4 mt-auto">
+<button class="px-6 py-2 rounded border border-muted text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors font-body-base text-body-base font-medium">
+                                    Descartar
+                                </button>
+<!-- Danger/Primary action as requested -->
+<button class="px-6 py-2 rounded bg-status-critical/10 border border-status-critical/30 text-status-critical hover:bg-status-critical hover:text-surface-card transition-colors font-body-base text-body-base font-medium flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed">
+<span class="material-symbols-outlined group-hover:animate-pulse" style="font-size: 18px;">generating_tokens</span>
+                                    Generar Nota de Reemplazo
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple micro-interaction for textarea char count
+        const textarea = document.getElementById('justification');
+        const charCount = document.getElementById('char-count');
+        
+        textarea.addEventListener('input', function() {
+            const len = this.value.length;
+            charCount.textContent = `${len} / 30 min chars`;
+            if (len >= 30) {
+                charCount.classList.remove('text-status-warning');
+                charCount.classList.add('text-status-success');
+                this.classList.remove('border-status-warning/50');
+                this.classList.add('border-muted');
+            } else {
+                charCount.classList.add('text-status-warning');
+                charCount.classList.remove('text-status-success');
+                this.classList.add('border-status-warning/50');
+                this.classList.remove('border-muted');
+            }
+        });
+    </script>
+</body></html>

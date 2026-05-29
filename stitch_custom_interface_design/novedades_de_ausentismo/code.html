@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestión de Novedades de Ausentismo - Nomara</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed-dim": "#00daf3",
+                      "secondary-fixed": "#d6e3ff",
+                      "inverse-on-surface": "#2f3035",
+                      "primary-container": "#4da2ff",
+                      "primary": "#a2c9ff",
+                      "on-tertiary-fixed": "#001f24",
+                      "status-success": "#00F08F",
+                      "secondary-container": "#31476b",
+                      "error": "#ffb4ab",
+                      "on-tertiary-fixed-variant": "#004f58",
+                      "on-error": "#690005",
+                      "on-tertiary-container": "#003c44",
+                      "surface-card": "#12161F",
+                      "on-tertiary": "#00363d",
+                      "primary-fixed": "#d3e4ff",
+                      "on-secondary-fixed": "#001b3d",
+                      "on-secondary-container": "#a0b6e0",
+                      "on-secondary-fixed-variant": "#31476b",
+                      "on-primary-fixed": "#001c38",
+                      "on-primary-container": "#003765",
+                      "surface-container-high": "#282a2e",
+                      "surface-container-lowest": "#0c0e12",
+                      "surface-tint": "#a2c9ff",
+                      "status-warning": "#FFB800",
+                      "tertiary-container": "#00afc3",
+                      "primary-fixed-dim": "#a2c9ff",
+                      "tertiary": "#00daf3",
+                      "on-surface-variant": "#c0c7d4",
+                      "secondary-fixed-dim": "#b1c7f2",
+                      "outline": "#8a919d",
+                      "inverse-surface": "#e2e2e8",
+                      "border-muted": "#232833",
+                      "error-container": "#93000a",
+                      "surface-container-highest": "#333539",
+                      "on-primary-fixed-variant": "#004881",
+                      "on-secondary": "#193053",
+                      "surface": "#111318",
+                      "surface-dim": "#111318",
+                      "surface-bright": "#37393e",
+                      "background": "#111318",
+                      "inverse-primary": "#0060aa",
+                      "surface-container-low": "#1a1c20",
+                      "surface-variant": "#333539",
+                      "on-error-container": "#ffdad6",
+                      "on-surface": "#e2e2e8",
+                      "on-primary": "#00315c",
+                      "surface-container": "#1e2024",
+                      "secondary": "#b1c7f2",
+                      "text-dimmed": "#8E97A4",
+                      "status-critical": "#FF4D4D",
+                      "on-background": "#e2e2e8",
+                      "outline-variant": "#404752",
+                      "tertiary-fixed": "#9cf0ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "container-max": "1440px",
+                      "gutter": "16px",
+                      "margin-desktop": "32px"
+              },
+              "fontFamily": {
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-md-mobile": [
+                              "Inter"
+                      ],
+                      "data-mono": [
+                              "JetBrains Mono"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "body-base": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.08em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md-mobile": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "data-mono": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-base": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-fill { font-variation-settings: 'FILL' 1; }
+        
+        /* Custom scrollbar for tables */
+        .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: theme('colors.outline-variant'); border-radius: theme('borderRadius.DEFAULT'); }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden font-body-base text-body-base bg-background text-on-background">
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex bg-surface-container border-r border-outline-variant flex-col h-full py-gutter px-4 w-64 shrink-0">
+<div class="mb-8 px-2">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container icon-fill">shield</span>
+</div>
+<div>
+<h1 class="font-display-lg text-display-lg text-primary" style="font-size: 1.25rem; line-height: 1.5rem;">Nomara</h1>
+</div>
+</div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Admin Console</p>
+<p class="font-label-caps text-[10px] text-tertiary mt-1">DIAN Regulatory Ready</p>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded" href="#">
+<span class="material-symbols-outlined text-[20px]">gavel</span>
+<span class="font-label-caps text-label-caps">Compliance Health</span>
+</a>
+</li>
+<li>
+<!-- Active State Logic applied to Shift Management based on intent (Absenteeism affects shifts) -->
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container font-semibold rounded-lg translate-x-1 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px] icon-fill">schedule_send</span>
+<span class="font-label-caps text-label-caps">Shift Management</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded" href="#">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+<span class="font-label-caps text-label-caps">Employee Records</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded" href="#">
+<span class="material-symbols-outlined text-[20px]">history_edu</span>
+<span class="font-label-caps text-label-caps">Audit Logs</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mt-auto pt-4 border-t border-border-muted">
+<button class="w-full flex items-center justify-center gap-2 py-2 bg-primary/10 text-primary border border-primary/30 rounded font-label-caps text-label-caps hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+                Generate Report
+            </button>
+<ul class="mt-4 space-y-1">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded" href="#">
+<span class="material-symbols-outlined text-[18px]">description</span>
+<span class="font-label-caps text-label-caps">Documentation</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded" href="#">
+<span class="material-symbols-outlined text-[18px]">help_outline</span>
+<span class="font-label-caps text-label-caps">Support</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col min-w-0 bg-background">
+<!-- TopAppBar (Shared Component) -->
+<header class="bg-surface-container-high border-b border-outline-variant flex justify-between items-center w-full px-margin-desktop h-16 sticky top-0 z-50 shrink-0">
+<div class="flex items-center gap-4">
+<span class="md:hidden font-display-lg text-primary tracking-tight font-bold text-xl">Nomara</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-colors duration-200 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-colors duration-200 rounded-full">
+<span class="material-symbols-outlined">account_balance</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-colors duration-200 rounded-full mr-2">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-outline-variant">
+<img alt="Administrator Avatar" class="w-full h-full object-cover" data-alt="A small, professional circular avatar portrait of an administrator inside the Nomara compliance engine interface. The portrait features a neutral, focused expression against a dark gray background, fitting the high-precision, technical aesthetic of the deep-space dark mode UI. The image is crisp and integrates seamlessly into the top navigation bar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB89m_2sXJQLaZ_r24u86D4YpHxRP3BC3kQyUYnuwcZmqE1Q97qBxS7z5Rd-SxiTe_N6Qbr1Rp_Y_hgQjb61Sai_-_NKIE7tkNp7ZFPiKu2zH53045mQxMnODpXNz3vyh2aZf2-JdVjjvMyKEn_fccG2fA7HseRNP0ZjisLpKO5-QB3Wo5w7A6lfMszm1To7VkRHkBMRUib3ZCzTAyfA52JRGtPXvE0bPh_SXCDSMZHRcTs6A9DF0D1rvf6oAokPCQTGk9WmjrDjlU"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 overflow-y-auto p-margin-mobile md:p-margin-desktop custom-scrollbar">
+<div class="max-w-container-max mx-auto space-y-6">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-1">Gestión de Novedades de Ausentismo</h2>
+<p class="text-text-dimmed font-body-base text-body-base">Registro legal y operativo de incapacidades, licencias y permisos.</p>
+</div>
+</div>
+<!-- Regulatory Warning Banner -->
+<div class="bg-error-container/20 border border-error/50 rounded-lg p-4 flex gap-4 items-start">
+<span class="material-symbols-outlined text-error mt-0.5 icon-fill">warning</span>
+<div>
+<h3 class="font-label-caps text-label-caps text-error mb-1">ALERTA NORMATIVA: REEMPLAZO DE TURNOS</h3>
+<p class="font-body-base text-sm text-on-error-container">
+                            El registro de una novedad de ausentismo anulará automáticamente cualquier bloque operativo pre-programado en la Malla para el empleado durante el rango de fechas seleccionado. Esta acción es inmutable para evitar inconsistencias de doble pago (Soporte Art. 227 CST).
+                        </p>
+</div>
+</div>
+<!-- Bento Layout: Form & List -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Form Container (Left Column) -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<div class="bg-surface-card border border-border-muted rounded-xl p-6 flex flex-col gap-5 relative overflow-hidden">
+<!-- Subtle top accent line -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-primary"></div>
+<h3 class="font-headline-md text-xl text-on-surface">Registrar Novedad</h3>
+<form class="space-y-4">
+<!-- Empleado -->
+<div class="space-y-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant block">Empleado (C.C.)</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">search</span>
+<input class="w-full bg-surface border border-outline-variant rounded pl-10 pr-3 py-2 text-on-surface font-body-base text-sm focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none" placeholder="Buscar por nombre o doc..." type="text"/>
+</div>
+</div>
+<!-- Tipo Novedad -->
+<div class="space-y-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant block">Tipo de Novedad</label>
+<select class="w-full bg-surface border border-outline-variant rounded px-3 py-2 text-on-surface font-body-base text-sm focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none appearance-none">
+<option disabled="" selected="" value="">Seleccionar clasificación legal...</option>
+<option value="eg">Enfermedad General (66.67%)</option>
+<option value="at">Accidente Trabajo (100%)</option>
+<option value="lm">Licencia de Maternidad/Paternidad</option>
+<option value="pr">Permiso Remunerado</option>
+<option value="pn">Permiso No Remunerado</option>
+</select>
+</div>
+<!-- Fechas -->
+<div class="grid grid-cols-2 gap-3">
+<div class="space-y-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant block">Inicio</label>
+<input class="w-full bg-surface border border-outline-variant rounded px-3 py-2 text-on-surface font-data-mono text-data-mono focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="date"/>
+</div>
+<div class="space-y-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant block">Fin (Inclusivo)</label>
+<input class="w-full bg-surface border border-outline-variant rounded px-3 py-2 text-on-surface font-data-mono text-data-mono focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="date"/>
+</div>
+</div>
+<!-- Soporte -->
+<div class="space-y-1 pt-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant block flex justify-between">
+<span>Soporte Documental</span>
+<span class="text-[10px] text-status-warning">*Requerido</span>
+</label>
+<div class="border border-dashed border-outline-variant bg-surface/50 rounded-lg p-4 flex flex-col items-center justify-center gap-2 hover:bg-surface hover:border-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">cloud_upload</span>
+<p class="font-body-base text-xs text-text-dimmed text-center">Arrastra el archivo PDF de la EPS aquí o <span class="text-primary">examinar</span></p>
+</div>
+</div>
+<!-- Actions -->
+<div class="pt-4 border-t border-border-muted flex gap-3">
+<button class="flex-1 py-2 px-4 rounded border border-outline-variant text-on-surface hover:bg-surface-variant transition-colors font-label-caps text-label-caps" type="button">Cancelar</button>
+<button class="flex-1 py-2 px-4 rounded bg-primary text-on-primary hover:bg-primary-container transition-colors font-label-caps text-label-caps" type="button">Registrar &amp; Anular Turnos</button>
+</div>
+</form>
+</div>
+</div>
+<!-- List Container (Right Column) -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<div class="bg-surface-card border border-border-muted rounded-xl flex flex-col h-full overflow-hidden">
+<!-- Table Header Area -->
+<div class="p-5 border-b border-border-muted flex justify-between items-center bg-surface-container-low">
+<h3 class="font-headline-md text-xl text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">history</span>
+                                    Registro Cronológico Activo
+                                </h3>
+<div class="flex gap-2">
+<button class="p-1.5 rounded bg-surface border border-outline-variant text-on-surface hover:bg-surface-variant transition-colors" title="Filtrar">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</button>
+<button class="p-1.5 rounded bg-surface border border-outline-variant text-on-surface hover:bg-surface-variant transition-colors" title="Exportar Excel">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="overflow-x-auto custom-scrollbar flex-1">
+<table class="w-full text-left border-collapse min-w-[700px]">
+<thead class="bg-surface sticky top-0 z-10 border-b border-outline-variant">
+<tr>
+<th class="py-3 px-4 font-label-caps text-[11px] text-on-surface-variant uppercase tracking-wider font-normal">Empleado</th>
+<th class="py-3 px-4 font-label-caps text-[11px] text-on-surface-variant uppercase tracking-wider font-normal">Tipo / Origen</th>
+<th class="py-3 px-4 font-label-caps text-[11px] text-on-surface-variant uppercase tracking-wider font-normal">Rango de Fechas</th>
+<th class="py-3 px-4 font-label-caps text-[11px] text-on-surface-variant uppercase tracking-wider font-normal">Días</th>
+<th class="py-3 px-4 font-label-caps text-[11px] text-on-surface-variant uppercase tracking-wider font-normal">Estado Auditoría</th>
+<th class="py-3 px-4 w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-muted bg-surface-card">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-variant/30 transition-colors group">
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-body-base text-sm text-on-surface font-medium">Martínez, Laura</span>
+<span class="font-data-mono text-xs text-text-dimmed">CC: 1.023.456.789</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-status-warning"></div>
+<span class="font-body-base text-sm text-on-surface">Enfermedad Gral.</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="font-data-mono text-xs text-on-surface">2023-10-25 <span class="text-text-dimmed">→</span> 2023-10-28</div>
+</td>
+<td class="py-3 px-4">
+<span class="font-data-mono text-sm text-on-surface">4</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-status-success/30 bg-status-success/10 text-status-success font-label-caps text-[10px]">
+<span class="material-symbols-outlined text-[12px]">lock</span> Soporte Validado
+                                                </span>
+</td>
+<td class="py-3 px-4 text-right opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-variant/30 transition-colors group">
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-body-base text-sm text-on-surface font-medium">Gómez, Carlos</span>
+<span class="font-data-mono text-xs text-text-dimmed">CC: 80.123.456</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-body-base text-sm text-on-surface">Licencia Paternidad</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="font-data-mono text-xs text-on-surface">2023-10-26 <span class="text-text-dimmed">→</span> 2023-11-08</div>
+</td>
+<td class="py-3 px-4">
+<span class="font-data-mono text-sm text-on-surface">14</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-status-warning/30 bg-status-warning/10 text-status-warning font-label-caps text-[10px]">
+<span class="material-symbols-outlined text-[12px]">pending</span> Pendiente Soporte
+                                                </span>
+</td>
+<td class="py-3 px-4 text-right opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-variant/30 transition-colors group">
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-body-base text-sm text-on-surface font-medium">Ramírez, Ana</span>
+<span class="font-data-mono text-xs text-text-dimmed">CC: 52.987.654</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<span class="font-body-base text-sm text-on-surface">Permiso No Remun.</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="font-data-mono text-xs text-on-surface">2023-10-30 <span class="text-text-dimmed">→</span> 2023-10-30</div>
+</td>
+<td class="py-3 px-4">
+<span class="font-data-mono text-sm text-on-surface">1</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-status-success/30 bg-status-success/10 text-status-success font-label-caps text-[10px]">
+<span class="material-symbols-outlined text-[12px]">lock</span> Autorizado
+                                                </span>
+</td>
+<td class="py-3 px-4 text-right opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Visual connection to Malla Operativa (Footer info) -->
+<div class="bg-surface border-t border-border-muted p-3 flex items-center gap-3">
+<span class="material-symbols-outlined text-outline text-[18px]">grid_view</span>
+<p class="font-body-base text-xs text-text-dimmed">
+                                    Las novedades aprobadas segmentan automáticamente la <span class="text-primary font-medium cursor-pointer hover:underline">Malla Operativa</span> aplicando la línea quirúrgica 00:00:00 UTC-5 para el cálculo de recargos.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configuración de Vigencias Normativas - Nomara</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#2f3035",
+                        "primary-container": "#4da2ff",
+                        "surface-variant": "#333539",
+                        "on-tertiary-fixed-variant": "#004f58",
+                        "surface-bright": "#37393e",
+                        "tertiary-fixed-dim": "#00daf3",
+                        "tertiary": "#00daf3",
+                        "on-tertiary-fixed": "#001f24",
+                        "surface-tint": "#a2c9ff",
+                        "background": "#111318",
+                        "on-primary": "#00315c",
+                        "outline-variant": "#404752",
+                        "error-container": "#93000a",
+                        "status-success": "#00F08F",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#333539",
+                        "on-tertiary-container": "#003c44",
+                        "surface-container-low": "#1a1c20",
+                        "secondary": "#b1c7f2",
+                        "on-primary-fixed-variant": "#004881",
+                        "secondary-fixed-dim": "#b1c7f2",
+                        "status-critical": "#FF4D4D",
+                        "secondary-fixed": "#d6e3ff",
+                        "on-secondary": "#193053",
+                        "surface-container-high": "#282a2e",
+                        "surface-container-lowest": "#0c0e12",
+                        "primary": "#a2c9ff",
+                        "on-surface": "#e2e2e8",
+                        "inverse-surface": "#e2e2e8",
+                        "primary-fixed-dim": "#a2c9ff",
+                        "surface-dim": "#111318",
+                        "on-background": "#e2e2e8",
+                        "on-primary-fixed": "#001c38",
+                        "surface-card": "#12161F",
+                        "tertiary-fixed": "#9cf0ff",
+                        "error": "#ffb4ab",
+                        "status-warning": "#FFB800",
+                        "secondary-container": "#31476b",
+                        "surface-container": "#1e2024",
+                        "on-primary-container": "#003765",
+                        "on-surface-variant": "#c0c7d4",
+                        "outline": "#8a919d",
+                        "border-muted": "#232833",
+                        "tertiary-container": "#00afc3",
+                        "primary-fixed": "#d3e4ff",
+                        "on-tertiary": "#00363d",
+                        "on-secondary-container": "#a0b6e0",
+                        "surface": "#111318",
+                        "on-secondary-fixed-variant": "#31476b",
+                        "on-error-container": "#ffdad6",
+                        "text-dimmed": "#8E97A4",
+                        "inverse-primary": "#0060aa",
+                        "on-secondary-fixed": "#001b3d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Inter", "sans-serif"],
+                        "label-caps": ["JetBrains Mono", "monospace"],
+                        "headline-md": ["Inter", "sans-serif"],
+                        "body-base": ["Inter", "sans-serif"],
+                        "data-mono": ["JetBrains Mono", "monospace"],
+                        "headline-md-mobile": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(30, 32, 36, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(138, 145, 157, 0.1);
+        }
+        
+        /* Custom scrollbar for data tables */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111318;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #404752;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8a919d;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-base min-h-screen flex flex-col md:flex-row antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar (Mobile Only) -->
+<header class="md:hidden flex justify-between items-center w-full px-margin-mobile h-16 sticky top-0 z-50 bg-surface-container-high border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="water_drop" data-weight="fill" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+<span class="font-display-lg text-primary tracking-tight" style="font-size: 24px; line-height: 28px;">Nomara</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</div>
+</header>
+<!-- SideNavBar (Desktop Only) -->
+<nav class="hidden md:flex flex-col h-screen w-64 bg-surface-container border-r border-outline-variant py-gutter px-4 sticky top-0 z-40 shrink-0">
+<div class="flex items-center gap-3 mb-8 px-2 mt-4">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="water_drop" data-weight="fill" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+<div>
+<h1 class="font-display-lg text-primary text-xl tracking-tight leading-none">Nomara</h1>
+<p class="font-label-caps text-text-dimmed mt-1" style="font-size: 10px;">Admin Console</p>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-body-base font-semibold py-2.5 px-4 rounded-DEFAULT hover:bg-primary/90 transition-colors mb-6 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+            Nueva Vigencia
+        </button>
+<div class="flex-1 overflow-y-auto">
+<p class="font-label-caps text-text-dimmed px-2 mb-3">SISTEMA</p>
+<ul class="space-y-1 mb-8">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-all duration-150 font-body-base" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="dashboard">dashboard</span>
+                        Dashboard
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-secondary-container text-on-secondary-container font-semibold translate-x-1 font-body-base" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="gavel">gavel</span>
+                        Compliance Health
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-all duration-150 font-body-base" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="schedule_send">schedule_send</span>
+                        Shift Management
+                    </a>
+</li>
+</ul>
+<p class="font-label-caps text-text-dimmed px-2 mb-3">DATOS</p>
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-all duration-150 font-body-base" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="groups">groups</span>
+                        Employee Records
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-all duration-150 font-body-base" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="history_edu">history_edu</span>
+                        Audit Logs
+                    </a>
+</li>
+</ul>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-dimmed hover:text-on-surface hover:bg-surface-variant transition-all duration-150 font-body-base" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="description">description</span>
+                        Documentation
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-dimmed hover:text-on-surface hover:bg-surface-variant transition-all duration-150 font-body-base" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help_outline">help_outline</span>
+                        Support
+                    </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden bg-background">
+<!-- Desktop Header -->
+<header class="hidden md:flex justify-between items-center w-full px-margin-desktop h-16 shrink-0 bg-surface/80 backdrop-blur-md border-b border-border-muted z-30">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-md text-on-surface">Configuración de Vigencias Normativas</h2>
+<span class="px-2 py-0.5 rounded-DEFAULT bg-status-warning/10 text-status-warning font-label-caps border border-status-warning/20">ROOT ACCESS</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm" data-icon="search">search</span>
+<input class="bg-surface-container-low border-border-muted text-on-surface font-body-base rounded-DEFAULT pl-9 pr-4 py-1.5 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none w-64 transition-all placeholder-outline" placeholder="Buscar vigencia..." type="text"/>
+</div>
+<div class="w-px h-6 bg-border-muted mx-2"></div>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-on-surface transition-colors" data-icon="account_balance">account_balance</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-on-surface transition-colors" data-icon="notifications">notifications</span>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold font-data-mono ml-2 border border-outline-variant">
+                    AD
+                </div>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-margin-mobile md:p-margin-desktop">
+<div class="max-w-[container-max] mx-auto space-y-6">
+<!-- Page Intro & Context -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
+<div class="max-w-3xl">
+<h3 class="font-headline-md-mobile md:font-headline-md text-on-surface mb-2">Look-up Table de Reglas Legales</h3>
+<p class="text-text-dimmed font-body-base">
+                            Gestión centralizada de parámetros de liquidación de nómina. Las modificaciones en esta tabla son inmutables una vez aplicadas a periodos liquidados y generan un registro de auditoría estricto (Audit Log).
+                        </p>
+</div>
+<div class="flex gap-3 shrink-0">
+<button class="px-4 py-2 bg-surface-container border border-outline-variant rounded-DEFAULT text-on-surface font-body-base hover:bg-surface-variant transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+                            Exportar CSV
+                        </button>
+</div>
+</div>
+<!-- Active Configuration Card (Bento Style) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+<!-- Current Active Rule -->
+<div class="lg:col-span-8 bg-surface-card border border-border-muted rounded-lg overflow-hidden flex flex-col relative">
+<div class="absolute top-0 left-0 w-1 h-full bg-status-success"></div>
+<div class="p-6 border-b border-border-muted flex justify-between items-center bg-surface-container-low">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-status-success" data-icon="verified_user">verified_user</span>
+<h4 class="font-headline-md text-on-surface text-lg">Vigencia Actual</h4>
+<span class="px-2 py-0.5 rounded-DEFAULT bg-status-success/10 text-status-success font-label-caps border border-status-success/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]" data-icon="lock" data-weight="fill" style="font-variation-settings: 'FILL' 1;">lock</span>
+                                        APLICADA
+                                    </span>
+</div>
+<p class="text-text-dimmed font-data-mono text-xs">ID: VIG-2024-01 | Efectiva desde: 2024-01-01 00:00:00 UTC-5</p>
+</div>
+<button class="text-primary hover:text-primary-fixed transition-colors font-body-base flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+                                Clonar
+                            </button>
+</div>
+<div class="p-6 grid grid-cols-2 md:grid-cols-4 gap-6 bg-surface-card">
+<div class="space-y-1">
+<p class="font-label-caps text-text-dimmed">LEY BASE</p>
+<p class="font-body-base text-on-surface font-semibold">Ley 2101 de 2021</p>
+</div>
+<div class="space-y-1">
+<p class="font-label-caps text-text-dimmed">DIVISOR HORA</p>
+<p class="font-data-mono text-tertiary-fixed text-lg">235.00</p>
+</div>
+<div class="space-y-1">
+<p class="font-label-caps text-text-dimmed">% NOCTURNO</p>
+<p class="font-data-mono text-tertiary-fixed text-lg">35.00%</p>
+</div>
+<div class="space-y-1">
+<p class="font-label-caps text-text-dimmed">% DOMINICAL</p>
+<p class="font-data-mono text-tertiary-fixed text-lg">100.00%</p>
+</div>
+</div>
+<div class="px-6 py-4 bg-surface-container-lowest mt-auto border-t border-border-muted">
+<p class="font-data-mono text-xs text-text-dimmed flex items-center gap-2">
+<span class="material-symbols-outlined text-xs" data-icon="info">info</span>
+                                Jornada máxima legal: 46 horas semanales. Reducción gradual aplicada según cronograma normativo.
+                            </p>
+</div>
+</div>
+<!-- Upcoming / Draft Rule -->
+<div class="lg:col-span-4 bg-surface-container border border-outline-variant rounded-lg p-6 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<h4 class="font-body-base font-semibold text-on-surface">Próxima Reducción</h4>
+<span class="px-2 py-0.5 rounded-DEFAULT bg-surface-variant text-on-surface-variant font-label-caps border border-outline-variant">PROGRAMADA</span>
+</div>
+<p class="text-text-dimmed font-body-base mb-6">
+                                Ley 2101 Fase 3: Reducción a 44 horas semanales. Modifica el divisor de cálculo de valor hora.
+                            </p>
+<div class="space-y-3">
+<div class="flex justify-between items-center border-b border-border-muted pb-2">
+<span class="font-label-caps text-text-dimmed">EFECTIVA</span>
+<span class="font-data-mono text-on-surface">2025-07-16</span>
+</div>
+<div class="flex justify-between items-center border-b border-border-muted pb-2">
+<span class="font-label-caps text-text-dimmed">NUEVO DIVISOR</span>
+<span class="font-data-mono text-status-warning">220.00</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 border border-primary text-primary hover:bg-primary/10 rounded-DEFAULT transition-colors font-body-base flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+                            Revisar Borrador
+                        </button>
+</div>
+</section>
+<!-- Configuration Form (Collapsed / Hidden by default in real app, shown here for design) -->
+<section class="glass-panel rounded-lg mt-8 hidden">
+<!-- Kept structure ready but hidden to focus on the datatable view as primary interaction -->
+</section>
+<!-- History Table -->
+<section class="mt-8">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-md-mobile md:font-headline-md text-on-surface">Historial de Vigencias</h3>
+<div class="flex items-center gap-2 text-text-dimmed font-label-caps">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                            FILTRAR
+                        </div>
+</div>
+<div class="bg-surface-card border border-border-muted rounded-lg overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead>
+<tr class="bg-surface-container border-b border-border-muted">
+<th class="py-3 px-4 font-label-caps text-text-dimmed sticky left-0 bg-surface-container z-10 w-32">ID VIGENCIA</th>
+<th class="py-3 px-4 font-label-caps text-text-dimmed">INICIO VIGENCIA</th>
+<th class="py-3 px-4 font-label-caps text-text-dimmed">FIN VIGENCIA</th>
+<th class="py-3 px-4 font-label-caps text-text-dimmed text-right">DIVISOR</th>
+<th class="py-3 px-4 font-label-caps text-text-dimmed text-right">% NOCT.</th>
+<th class="py-3 px-4 font-label-caps text-text-dimmed text-right">% DOM.</th>
+<th class="py-3 px-4 font-label-caps text-text-dimmed text-center">ESTADO</th>
+</tr>
+</thead>
+<tbody class="font-data-mono text-sm text-on-surface">
+<tr class="border-b border-border-muted hover:bg-surface-variant/30 transition-colors group">
+<td class="py-3 px-4 sticky left-0 bg-surface-card group-hover:bg-[#1a1c20] transition-colors font-medium text-primary-fixed-dim">VIG-2024-01</td>
+<td class="py-3 px-4">2024-01-01</td>
+<td class="py-3 px-4 text-text-dimmed">Actual</td>
+<td class="py-3 px-4 text-right">235.00</td>
+<td class="py-3 px-4 text-right">35%</td>
+<td class="py-3 px-4 text-right">100%</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-DEFAULT bg-status-success/10 text-status-success font-label-caps text-[10px] border border-status-success/20">
+<span class="material-symbols-outlined text-[10px]" data-icon="lock" data-weight="fill" style="font-variation-settings: 'FILL' 1;">lock</span>
+                                            ACTIVO
+                                        </span>
+</td>
+</tr>
+<tr class="border-b border-border-muted hover:bg-surface-variant/30 transition-colors group">
+<td class="py-3 px-4 sticky left-0 bg-surface-card group-hover:bg-[#1a1c20] transition-colors text-text-dimmed">VIG-2023-02</td>
+<td class="py-3 px-4 text-text-dimmed">2023-07-16</td>
+<td class="py-3 px-4 text-text-dimmed">2023-12-31</td>
+<td class="py-3 px-4 text-right text-text-dimmed">240.00</td>
+<td class="py-3 px-4 text-right text-text-dimmed">35%</td>
+<td class="py-3 px-4 text-right text-text-dimmed">100%</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex px-2 py-0.5 rounded-DEFAULT bg-surface-variant text-on-surface-variant font-label-caps text-[10px] border border-outline-variant">
+                                            HISTÓRICO
+                                        </span>
+</td>
+</tr>
+<tr class="border-b border-border-muted hover:bg-surface-variant/30 transition-colors group">
+<td class="py-3 px-4 sticky left-0 bg-surface-card group-hover:bg-[#1a1c20] transition-colors text-text-dimmed">VIG-2022-01</td>
+<td class="py-3 px-4 text-text-dimmed">2022-01-01</td>
+<td class="py-3 px-4 text-text-dimmed">2023-07-15</td>
+<td class="py-3 px-4 text-right text-text-dimmed">240.00</td>
+<td class="py-3 px-4 text-right text-text-dimmed">35%</td>
+<td class="py-3 px-4 text-right text-text-dimmed">100%</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex px-2 py-0.5 rounded-DEFAULT bg-surface-variant text-on-surface-variant font-label-caps text-[10px] border border-outline-variant">
+                                            HISTÓRICO
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</div>
+</main>
+</body></html>

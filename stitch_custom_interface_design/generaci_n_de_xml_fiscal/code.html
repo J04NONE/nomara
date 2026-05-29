@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nomara - DIAN XML Generation</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#00daf3",
+                    "secondary-fixed": "#d6e3ff",
+                    "inverse-on-surface": "#2f3035",
+                    "primary-container": "#4da2ff",
+                    "primary": "#a2c9ff",
+                    "on-tertiary-fixed": "#001f24",
+                    "status-success": "#00F08F",
+                    "secondary-container": "#31476b",
+                    "error": "#ffb4ab",
+                    "on-tertiary-fixed-variant": "#004f58",
+                    "on-error": "#690005",
+                    "on-tertiary-container": "#003c44",
+                    "surface-card": "#12161F",
+                    "on-tertiary": "#00363d",
+                    "primary-fixed": "#d3e4ff",
+                    "on-secondary-fixed": "#001b3d",
+                    "on-secondary-container": "#a0b6e0",
+                    "on-secondary-fixed-variant": "#31476b",
+                    "on-primary-fixed": "#001c38",
+                    "on-primary-container": "#003765",
+                    "surface-container-high": "#282a2e",
+                    "surface-container-lowest": "#0c0e12",
+                    "surface-tint": "#a2c9ff",
+                    "status-warning": "#FFB800",
+                    "tertiary-container": "#00afc3",
+                    "primary-fixed-dim": "#a2c9ff",
+                    "tertiary": "#00daf3",
+                    "on-surface-variant": "#c0c7d4",
+                    "secondary-fixed-dim": "#b1c7f2",
+                    "outline": "#8a919d",
+                    "inverse-surface": "#e2e2e8",
+                    "border-muted": "#232833",
+                    "error-container": "#93000a",
+                    "surface-container-highest": "#333539",
+                    "on-primary-fixed-variant": "#004881",
+                    "on-secondary": "#193053",
+                    "surface": "#111318",
+                    "surface-dim": "#111318",
+                    "surface-bright": "#37393e",
+                    "background": "#111318",
+                    "inverse-primary": "#0060aa",
+                    "surface-container-low": "#1a1c20",
+                    "surface-variant": "#333539",
+                    "on-error-container": "#ffdad6",
+                    "on-surface": "#e2e2e8",
+                    "on-primary": "#00315c",
+                    "surface-container": "#1e2024",
+                    "secondary": "#b1c7f2",
+                    "text-dimmed": "#8E97A4",
+                    "status-critical": "#FF4D4D",
+                    "on-background": "#e2e2e8",
+                    "outline-variant": "#404752",
+                    "tertiary-fixed": "#9cf0ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "margin-mobile": "16px",
+                    "container-max": "1440px",
+                    "gutter": "16px",
+                    "margin-desktop": "32px"
+            },
+            "fontFamily": {
+                    "label-caps": [
+                            "JetBrains Mono"
+                    ],
+                    "headline-md-mobile": [
+                            "Inter"
+                    ],
+                    "data-mono": [
+                            "JetBrains Mono"
+                    ],
+                    "display-lg": [
+                            "Inter"
+                    ],
+                    "headline-md": [
+                            "Inter"
+                    ],
+                    "body-base": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.08em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-md-mobile": [
+                            "20px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "data-mono": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-base": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for developer-friendly vibe */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111318;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333539;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #404752;
+        }
+        
+        /* XML Syntax Highlighting Simulation */
+        .xml-tag { color: #b1c7f2; } /* secondary */
+        .xml-attr { color: #a2c9ff; } /* primary */
+        .xml-val { color: #e2e2e8; } /* on-surface */
+        .xml-comment { color: #8a919d; font-style: italic; } /* outline */
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-base text-body-base antialiased h-screen flex overflow-hidden">
+<!-- Shared Component: SideNavBar -->
+<nav class="hidden md:flex flex-col h-full border-r border-outline-variant py-gutter px-4 docked left-0 w-64 bg-surface-container shrink-0">
+<!-- Header -->
+<div class="mb-8 px-2 flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container text-[20px]" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<span class="font-display-lg text-[20px] font-bold text-primary tracking-tight">Nomara</span>
+</div>
+<div class="mt-2">
+<h2 class="font-body-base text-body-base font-semibold text-on-surface">Admin Console</h2>
+<p class="font-label-caps text-label-caps text-status-success mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> DIAN Regulatory Ready
+                </p>
+</div>
+</div>
+<!-- Main Navigation -->
+<ul class="flex flex-col gap-1 flex-1">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container font-semibold rounded-lg translate-x-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">gavel</span>
+<span>Compliance Health</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded" href="#">
+<span class="material-symbols-outlined">schedule_send</span>
+<span>Shift Management</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span>Employee Records</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span>Audit Logs</span>
+</a>
+</li>
+</ul>
+<!-- Action & Footer -->
+<div class="mt-auto flex flex-col gap-4 border-t border-muted pt-4">
+<button class="w-full bg-primary text-on-primary font-body-base text-body-base font-semibold py-2 rounded hover:bg-primary-container transition-colors">
+                Generate Report
+            </button>
+<ul class="flex flex-col gap-1">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded" href="#">
+<span class="material-symbols-outlined">description</span>
+<span>Documentation</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span>Support</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col min-w-0 bg-background">
+<!-- Shared Component: TopAppBar -->
+<header class="bg-surface-container-high border-b border-outline-variant flex justify-between items-center w-full px-margin-desktop h-16 sticky top-0 z-50 shrink-0">
+<!-- Brand / Context (Mobile mainly, hidden on desktop as Sidebar handles it, but keeping structure per JSON if needed, adopting context title here) -->
+<div class="flex items-center gap-4">
+<span class="md:hidden font-display-lg text-[24px] font-bold text-primary tracking-tight">Nomara</span>
+<div class="hidden md:flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">folder_open</span>
+<span class="font-data-mono text-data-mono">/ compliance / period_close_xml</span>
+</div>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">account_balance</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant border border-outline-variant overflow-hidden ml-2">
+<!-- Placeholder avatar -->
+<div class="w-full h-full flex items-center justify-center text-on-surface-variant font-label-caps">AD</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-auto">
+<div class="max-w-container-max mx-auto px-margin-desktop py-gutter flex flex-col gap-6">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-muted pb-6">
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">data_object</span>
+                            DIAN XML Generation &amp; Traceability
+                        </h1>
+<p class="font-body-base text-body-base text-on-surface-variant mt-2 max-w-2xl">
+                            Review approved settlements for the closing period before transmitting electronic payroll documents (Documento Soporte de Pago de Nómina Electrónica) under Resolution 000013.
+                        </p>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<div class="px-3 py-1.5 rounded bg-surface-container border border-muted flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-status-success">verified_user</span>
+<span class="font-label-caps text-label-caps text-on-surface">Res. 000013 Compliance</span>
+</div>
+<button class="bg-primary text-on-primary font-body-base text-body-base font-semibold px-4 py-2 rounded hover:bg-primary-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">send</span>
+                            Transmit Batch (RF-08)
+                        </button>
+</div>
+</div>
+<!-- Main Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter h-full">
+<!-- Left Column: Data Table -->
+<div class="xl:col-span-7 flex flex-col gap-4">
+<h2 class="font-body-base text-body-base font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">list_alt</span>
+                            Approved Settlements Ready for Transmission
+                        </h2>
+<div class="bg-surface-card border border-muted rounded overflow-hidden flex flex-col h-[600px]">
+<!-- Table Controls -->
+<div class="p-3 border-b border-muted bg-surface flex justify-between items-center gap-4">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="w-full bg-surface-container-low border border-muted rounded pl-10 pr-3 py-1.5 font-body-base text-body-base text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none" placeholder="Search ID or Employee..." type="text"/>
+</div>
+<div class="flex gap-2">
+<button class="p-1.5 text-outline hover:text-on-surface border border-transparent hover:border-muted rounded transition-all"><span class="material-symbols-outlined text-[18px]">filter_list</span></button>
+</div>
+</div>
+<!-- Scrollable Table -->
+<div class="flex-1 overflow-auto">
+<table class="w-full text-left border-collapse min-w-[700px]">
+<thead class="sticky top-0 bg-surface-container border-b border-muted z-10">
+<tr>
+<th class="px-4 py-3 font-label-caps text-label-caps text-on-surface-variant w-12"></th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-on-surface-variant">Document ID</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-on-surface-variant">Employee</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-on-surface-variant text-right">Base Salary (COP)</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-on-surface-variant text-right">Surcharges</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-on-surface-variant text-center">Status</th>
+</tr>
+</thead>
+<tbody class="font-body-base text-body-base text-on-surface">
+<!-- Active Row -->
+<tr class="border-b border-muted bg-surface-variant/30 hover:bg-surface-variant/50 transition-colors cursor-pointer relative">
+<td class="px-4 py-3">
+<div class="w-1 h-full bg-primary absolute left-0 top-0"></div>
+<span class="material-symbols-outlined text-primary text-[18px]">chevron_right</span>
+</td>
+<td class="px-4 py-3 font-data-mono text-data-mono">NI-202310-001</td>
+<td class="px-4 py-3">Andres Felipe Rojas</td>
+<td class="px-4 py-3 font-data-mono text-data-mono text-right">2,500,000.00</td>
+<td class="px-4 py-3 font-data-mono text-data-mono text-right text-tertiary">350,000.00</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-status-success/10 text-status-success font-label-caps text-[10px] border border-status-success/20">
+<span class="material-symbols-outlined text-[12px]">lock</span>
+                                                    APPROVED
+                                                </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-muted hover:bg-surface-variant/30 transition-colors cursor-pointer">
+<td class="px-4 py-3"><span class="material-symbols-outlined text-outline text-[18px]">description</span></td>
+<td class="px-4 py-3 font-data-mono text-data-mono">NI-202310-002</td>
+<td class="px-4 py-3">Camila Rodriguez Silva</td>
+<td class="px-4 py-3 font-data-mono text-data-mono text-right">3,200,000.00</td>
+<td class="px-4 py-3 font-data-mono text-data-mono text-right text-tertiary">120,500.00</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-status-success/10 text-status-success font-label-caps text-[10px] border border-status-success/20">
+<span class="material-symbols-outlined text-[12px]">lock</span>
+                                                    APPROVED
+                                                </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b border-muted hover:bg-surface-variant/30 transition-colors cursor-pointer">
+<td class="px-4 py-3"><span class="material-symbols-outlined text-outline text-[18px]">description</span></td>
+<td class="px-4 py-3 font-data-mono text-data-mono">NI-202310-003</td>
+<td class="px-4 py-3">Luis Gabriel Torres</td>
+<td class="px-4 py-3 font-data-mono text-data-mono text-right">1,800,000.00</td>
+<td class="px-4 py-3 font-data-mono text-data-mono text-right text-tertiary">850,000.00</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-status-success/10 text-status-success font-label-caps text-[10px] border border-status-success/20">
+<span class="material-symbols-outlined text-[12px]">lock</span>
+                                                    APPROVED
+                                                </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="border-b border-muted hover:bg-surface-variant/30 transition-colors cursor-pointer">
+<td class="px-4 py-3"><span class="material-symbols-outlined text-outline text-[18px]">description</span></td>
+<td class="px-4 py-3 font-data-mono text-data-mono">NI-202310-004</td>
+<td class="px-4 py-3">Diana Maria Gomez</td>
+<td class="px-4 py-3 font-data-mono text-data-mono text-right">4,500,000.00</td>
+<td class="px-4 py-3 font-data-mono text-data-mono text-right text-outline">0.00</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-status-success/10 text-status-success font-label-caps text-[10px] border border-status-success/20">
+<span class="material-symbols-outlined text-[12px]">lock</span>
+                                                    APPROVED
+                                                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-3 bg-surface border-t border-muted text-right">
+<span class="font-data-mono text-data-mono text-on-surface-variant text-[12px]">Total Rows: 142 / Ready for DIAN</span>
+</div>
+</div>
+</div>
+<!-- Right Column: XML Technical Detail Panel -->
+<div class="xl:col-span-5 flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<h2 class="font-body-base text-body-base font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">code_blocks</span>
+                                Document Technical Details
+                            </h2>
+<span class="font-data-mono text-data-mono text-primary bg-primary/10 px-2 py-1 rounded text-[12px]">ID: NI-202310-001</span>
+</div>
+<div class="bg-surface-card border border-muted rounded flex flex-col h-[600px] overflow-hidden">
+<!-- Traceability / CUNE Header -->
+<div class="p-4 border-b border-muted bg-surface-container-high">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]">fingerprint</span>
+<h3 class="font-label-caps text-label-caps text-on-surface">Simulated CUNE (SHA-256)</h3>
+</div>
+<div class="bg-surface-container-lowest p-2 border border-outline-variant rounded font-data-mono text-data-mono text-on-surface-variant break-all text-[11px] leading-relaxed select-all">
+                                    e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+                                </div>
+<p class="text-[11px] text-outline mt-2 font-data-mono">
+<span class="text-status-warning">*</span> Pre-computation prior to DIAN signature wrapping.
+                                </p>
+</div>
+<!-- XML Viewer Container -->
+<div class="flex-1 flex flex-col min-h-0">
+<div class="px-4 py-2 border-b border-muted bg-surface-container flex justify-between items-center shrink-0">
+<span class="font-label-caps text-label-caps text-outline">NominaIndividual.xml</span>
+<button class="text-outline hover:text-primary transition-colors flex items-center gap-1" title="Copy XML">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+<!-- The Code Block -->
+<pre class="flex-1 overflow-auto p-4 bg-surface-container-lowest font-data-mono text-data-mono text-[12px] leading-relaxed"><code class="language-xml">
+<span class="xml-comment">&lt;!-- Extract: HU-05 Devengos / Recargos --&gt;</span>
+<span class="xml-tag">&lt;Devengos&gt;</span>
+    <span class="xml-tag">&lt;Basico&gt;</span>
+        <span class="xml-tag">&lt;DiasTrabajados&gt;</span><span class="xml-val">30</span><span class="xml-tag">&lt;/DiasTrabajados&gt;</span>
+        <span class="xml-tag">&lt;SueldoTrabajado&gt;</span><span class="xml-val">2500000.00</span><span class="xml-tag">&lt;/SueldoTrabajado&gt;</span>
+    <span class="xml-tag">&lt;/Basico&gt;</span>
+    <span class="xml-tag">&lt;HorasExtras&gt;</span>
+        <span class="xml-tag">&lt;HED&gt;</span>
+            <span class="xml-tag">&lt;HoraExtra&gt;</span>
+                <span class="xml-tag">&lt;HoraInicio&gt;</span><span class="xml-val">2023-10-15T18:00:00</span><span class="xml-tag">&lt;/HoraInicio&gt;</span>
+                <span class="xml-tag">&lt;HoraFin&gt;</span><span class="xml-val">2023-10-15T20:00:00</span><span class="xml-tag">&lt;/HoraFin&gt;</span>
+                <span class="xml-tag">&lt;Cantidad&gt;</span><span class="xml-val">2</span><span class="xml-tag">&lt;/Cantidad&gt;</span>
+                <span class="xml-tag">&lt;Porcentaje&gt;</span><span class="xml-val">25.00</span><span class="xml-tag">&lt;/Porcentaje&gt;</span>
+                <span class="xml-tag">&lt;Pago&gt;</span><span class="xml-val">52083.33</span><span class="xml-tag">&lt;/Pago&gt;</span>
+            <span class="xml-tag">&lt;/HoraExtra&gt;</span>
+        <span class="xml-tag">&lt;/HED&gt;</span>
+        <span class="xml-tag">&lt;HRN&gt;</span> <span class="xml-comment">&lt;!-- Recargo Nocturno (Res 000013) --&gt;</span>
+            <span class="xml-tag">&lt;HoraRecargo&gt;</span>
+                <span class="xml-tag">&lt;Cantidad&gt;</span><span class="xml-val">14</span><span class="xml-tag">&lt;/Cantidad&gt;</span>
+                <span class="xml-tag">&lt;Porcentaje&gt;</span><span class="xml-val">35.00</span><span class="xml-tag">&lt;/Porcentaje&gt;</span>
+                <span class="xml-tag">&lt;Pago&gt;</span><span class="xml-val">297916.67</span><span class="xml-tag">&lt;/Pago&gt;</span>
+            <span class="xml-tag">&lt;/HoraRecargo&gt;</span>
+        <span class="xml-tag">&lt;/HRN&gt;</span>
+    <span class="xml-tag">&lt;/HorasExtras&gt;</span>
+    <span class="xml-tag">&lt;RecargoDN&gt;</span> <span class="xml-comment">&lt;!-- Validated against Shift Matrix Engine --&gt;</span>
+        <span class="xml-tag">&lt;Cantidad&gt;</span><span class="xml-val">0</span><span class="xml-tag">&lt;/Cantidad&gt;</span>
+        <span class="xml-tag">&lt;Pago&gt;</span><span class="xml-val">0.00</span><span class="xml-tag">&lt;/Pago&gt;</span>
+    <span class="xml-tag">&lt;/RecargoDN&gt;</span>
+<span class="xml-tag">&lt;/Devengos&gt;</span>
+                                </code></pre>
+</div>
+<!-- Action Footer -->
+<div class="p-4 border-t border-muted bg-surface-container flex justify-end gap-3 shrink-0">
+<button class="px-4 py-2 border border-muted text-on-surface font-body-base text-body-base font-medium rounded hover:bg-surface-variant hover:border-outline-variant transition-colors">
+                                    View Full XML
+                                </button>
+<button class="px-4 py-2 border border-primary text-primary font-body-base text-body-base font-semibold rounded hover:bg-primary/10 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                                    Download Support Document
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

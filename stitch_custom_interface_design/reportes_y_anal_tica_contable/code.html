@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nomara - Reportes Contables</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-tint": "#a2c9ff",
+                        "secondary-fixed-dim": "#b1c7f2",
+                        "status-critical": "#FF4D4D",
+                        "outline-variant": "#404752",
+                        "on-tertiary-fixed": "#001f24",
+                        "primary": "#a2c9ff",
+                        "on-primary-container": "#003765",
+                        "error-container": "#93000a",
+                        "surface-container-highest": "#333539",
+                        "on-surface-variant": "#c0c7d4",
+                        "tertiary-container": "#00afc3",
+                        "surface-variant": "#333539",
+                        "on-secondary-fixed-variant": "#31476b",
+                        "primary-container": "#4da2ff",
+                        "status-success": "#00F08F",
+                        "inverse-primary": "#0060aa",
+                        "on-surface": "#e2e2e8",
+                        "primary-fixed-dim": "#a2c9ff",
+                        "inverse-on-surface": "#2f3035",
+                        "status-warning": "#FFB800",
+                        "secondary-container": "#31476b",
+                        "surface-container": "#1e2024",
+                        "tertiary-fixed": "#9cf0ff",
+                        "on-tertiary-fixed-variant": "#004f58",
+                        "on-tertiary": "#00363d",
+                        "surface-container-high": "#282a2e",
+                        "primary-fixed": "#d3e4ff",
+                        "on-secondary-fixed": "#001b3d",
+                        "on-primary": "#00315c",
+                        "secondary": "#b1c7f2",
+                        "on-error": "#690005",
+                        "on-error-container": "#ffdad6",
+                        "surface-card": "#12161F",
+                        "secondary-fixed": "#d6e3ff",
+                        "tertiary": "#00daf3",
+                        "on-primary-fixed": "#001c38",
+                        "on-primary-fixed-variant": "#004881",
+                        "surface": "#111318",
+                        "surface-bright": "#37393e",
+                        "on-secondary-container": "#a0b6e0",
+                        "on-secondary": "#193053",
+                        "border-muted": "#232833",
+                        "inverse-surface": "#e2e2e8",
+                        "surface-container-low": "#1a1c20",
+                        "tertiary-fixed-dim": "#00daf3",
+                        "surface-container-lowest": "#0c0e12",
+                        "error": "#ffb4ab",
+                        "on-tertiary-container": "#003c44",
+                        "on-background": "#e2e2e8",
+                        "outline": "#8a919d",
+                        "text-dimmed": "#8E97A4",
+                        "background": "#111318",
+                        "surface-dim": "#111318"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.125rem",
+                        lg: "0.25rem",
+                        xl: "0.5rem",
+                        full: "0.75rem"
+                    },
+                    spacing: {
+                        "margin-mobile": "16px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "container-max": "1440px",
+                        "margin-desktop": "32px"
+                    },
+                    fontFamily: {
+                        "headline-md-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "display-lg": ["Inter"],
+                        "body-base": ["Inter"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    fontSize: {
+                        "headline-md-mobile": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "data-mono": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "body-base": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.08em", fontWeight: "700" }]
+                    }
+                }
+            }
+        };
+    </script>
+<style>
+        body {
+            background-color: #111318;
+            color: #e2e2e8;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-base text-body-base min-h-screen flex flex-col md:flex-row antialiased">
+<!-- Desktop Side Navigation -->
+<nav class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container dark:bg-surface-container text-primary font-label-caps text-label-caps border-r border-muted flat no shadows py-6 z-50">
+<div class="px-6 mb-8 flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[32px] text-primary" data-icon="hub">hub</span>
+<div>
+<h1 class="font-headline-md text-headline-md text-primary">Nomara</h1>
+<span class="text-[10px] text-text-dimmed uppercase tracking-widest block mt-1">Compliance Engine</span>
+</div>
+</div>
+</div>
+<ul class="flex flex-col flex-grow">
+<!-- Inactive -->
+<li class="group cursor-pointer text-text-dimmed hover:bg-surface-variant hover:text-on-surface-variant transition-all">
+<a class="flex items-center gap-3 px-6 py-3 w-full" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<!-- Inactive -->
+<li class="group cursor-pointer text-text-dimmed hover:bg-surface-variant hover:text-on-surface-variant transition-all">
+<a class="flex items-center gap-3 px-6 py-3 w-full" href="#">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+                    Compliance
+                </a>
+</li>
+<!-- Inactive -->
+<li class="group cursor-pointer text-text-dimmed hover:bg-surface-variant hover:text-on-surface-variant transition-all">
+<a class="flex items-center gap-3 px-6 py-3 w-full" href="#">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+                    Shifts
+                </a>
+</li>
+<!-- Inactive -->
+<li class="group cursor-pointer text-text-dimmed hover:bg-surface-variant hover:text-on-surface-variant transition-all">
+<a class="flex items-center gap-3 px-6 py-3 w-full" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+                    Employees
+                </a>
+</li>
+<!-- Active - Assuming Analytics/Reports falls under Audit for this design -->
+<li class="group cursor-pointer text-primary border-r-2 border-primary bg-primary/5 hover:bg-surface-variant hover:text-on-surface-variant transition-all">
+<a class="flex items-center gap-3 px-6 py-3 w-full" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                    Audit
+                </a>
+</li>
+</ul>
+<ul class="flex flex-col mt-auto pt-4 border-t border-muted px-2">
+<li class="group cursor-pointer text-text-dimmed hover:bg-surface-variant hover:text-on-surface-variant transition-all rounded-DEFAULT">
+<a class="flex items-center gap-3 px-4 py-2 w-full" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="help_outline">help_outline</span>
+                    Support
+                </a>
+</li>
+<li class="group cursor-pointer text-text-dimmed hover:bg-surface-variant hover:text-on-surface-variant transition-all rounded-DEFAULT">
+<a class="flex items-center gap-3 px-4 py-2 w-full" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="logout">logout</span>
+                    Sign Out
+                </a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- Mobile Top App Bar -->
+<header class="md:hidden flex justify-between items-center px-6 h-16 w-full sticky top-0 z-40 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-muted flat no shadows">
+<div class="flex items-center gap-3 cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">Nomara</span>
+</div>
+<div class="flex items-center gap-4 text-primary font-body-base text-body-base">
+<span class="material-symbols-outlined cursor-pointer active:opacity-80 hover:text-primary-container transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined cursor-pointer active:opacity-80 hover:text-primary-container transition-colors" data-icon="settings">settings</span>
+</div>
+</header>
+<!-- Page Header & Filters -->
+<div class="px-margin-mobile md:px-margin-desktop py-8 border-b border-muted bg-surface-container-low">
+<div class="max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-6">
+<div>
+<h2 class="font-headline-md-mobile md:font-headline-md text-on-surface mb-1">Reportes Contables</h2>
+<p class="text-text-dimmed font-data-mono text-data-mono">RF-17: Nómina por Centro de Costo</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+<!-- Filters -->
+<div class="flex items-center gap-3 bg-surface-card border border-muted rounded-DEFAULT p-1 focus-within:border-primary transition-colors">
+<span class="material-symbols-outlined text-text-dimmed ml-2 text-[18px]" data-icon="calendar_month">calendar_month</span>
+<select class="bg-transparent border-none text-on-surface font-body-base text-body-base focus:ring-0 py-2 pr-8 pl-1 cursor-pointer">
+<option value="2023-10">Octubre 2023</option>
+<option value="2023-09">Septiembre 2023</option>
+<option value="2023-08">Agosto 2023</option>
+</select>
+</div>
+<div class="flex items-center gap-3 bg-surface-card border border-muted rounded-DEFAULT p-1 focus-within:border-primary transition-colors">
+<span class="material-symbols-outlined text-text-dimmed ml-2 text-[18px]" data-icon="domain">domain</span>
+<select class="bg-transparent border-none text-on-surface font-body-base text-body-base focus:ring-0 py-2 pr-8 pl-1 cursor-pointer">
+<option value="all">Todos los Departamentos</option>
+<option value="ops">Operaciones</option>
+<option value="tech">Tecnología</option>
+<option value="admin">Administración</option>
+</select>
+</div>
+<button class="bg-primary text-on-primary-container font-label-caps text-label-caps px-6 py-2 rounded-DEFAULT hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+                            EXPORTAR
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Dashboard Content -->
+<div class="flex-1 p-margin-mobile md:p-margin-desktop bg-background">
+<div class="max-w-container-max mx-auto space-y-gutter">
+<!-- KPI Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- KPI 1 -->
+<div class="bg-surface-card border border-muted rounded-DEFAULT p-6 flex flex-col gap-2 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-primary/5 rounded-bl-full flex items-start justify-end p-3">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<span class="font-label-caps text-label-caps text-text-dimmed uppercase tracking-wider">Total Devengado</span>
+<div class="font-data-mono text-data-mono text-2xl text-on-surface">
+                            $4,250,900.00 <span class="text-xs text-text-dimmed">COP</span>
+</div>
+<div class="flex items-center gap-1 mt-2 text-status-success font-data-mono text-[11px]">
+<span class="material-symbols-outlined text-[14px]" data-icon="trending_up">trending_up</span>
+<span>+2.4% vs Mes Anterior</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface-card border border-muted rounded-DEFAULT p-6 flex flex-col gap-2 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-status-warning/5 rounded-bl-full flex items-start justify-end p-3">
+<span class="material-symbols-outlined text-status-warning text-[20px]" data-icon="warning">warning</span>
+</div>
+<span class="font-label-caps text-label-caps text-text-dimmed uppercase tracking-wider">Total Recargos</span>
+<div class="font-data-mono text-data-mono text-2xl text-on-surface">
+                            $845,200.00 <span class="text-xs text-text-dimmed">COP</span>
+</div>
+<div class="flex items-center gap-1 mt-2 text-text-dimmed font-data-mono text-[11px]">
+<span class="material-symbols-outlined text-[14px]" data-icon="remove">remove</span>
+<span>Sin cambios significativos</span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-surface-card border border-muted rounded-DEFAULT p-6 flex flex-col gap-2 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-tertiary/5 rounded-bl-full flex items-start justify-end p-3">
+<span class="material-symbols-outlined text-tertiary text-[20px]" data-icon="money_off">money_off</span>
+</div>
+<span class="font-label-caps text-label-caps text-text-dimmed uppercase tracking-wider">Total Deducciones</span>
+<div class="font-data-mono text-data-mono text-2xl text-on-surface">
+                            $320,150.00 <span class="text-xs text-text-dimmed">COP</span>
+</div>
+<div class="flex items-center gap-1 mt-2 text-status-critical font-data-mono text-[11px]">
+<span class="material-symbols-outlined text-[14px]" data-icon="trending_down">trending_down</span>
+<span>-1.2% vs Mes Anterior</span>
+</div>
+</div>
+</div>
+<!-- Main Data View -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter mt-6">
+<!-- Left: Detailed Table -->
+<div class="lg:col-span-2 bg-surface-card border border-muted rounded-DEFAULT flex flex-col">
+<div class="px-6 py-4 border-b border-muted flex justify-between items-center bg-surface-container-low rounded-t-DEFAULT">
+<h3 class="font-headline-md-mobile text-headline-md-mobile text-on-surface">Desglose por Centro de Costo</h3>
+<button class="text-primary hover:text-primary-container transition-colors text-sm font-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="filter_list">filter_list</span>
+                                Filtros
+                            </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container sticky top-0">
+<tr>
+<th class="px-6 py-3 font-label-caps text-label-caps text-text-dimmed border-b border-muted font-normal">C. Costo ID</th>
+<th class="px-6 py-3 font-label-caps text-label-caps text-text-dimmed border-b border-muted font-normal">Descripción</th>
+<th class="px-6 py-3 font-label-caps text-label-caps text-text-dimmed border-b border-muted font-normal text-right">Devengado</th>
+<th class="px-6 py-3 font-label-caps text-label-caps text-text-dimmed border-b border-muted font-normal text-right">Recargos</th>
+<th class="px-6 py-3 font-label-caps text-label-caps text-text-dimmed border-b border-muted font-normal text-right">Deducciones</th>
+</tr>
+</thead>
+<tbody class="font-data-mono text-data-mono">
+<!-- Row 1 -->
+<tr class="border-b border-muted hover:bg-surface-variant/50 transition-colors group">
+<td class="px-6 py-3 text-secondary-fixed-dim">CC-OP-001</td>
+<td class="px-6 py-3 text-on-surface">Operaciones Planta</td>
+<td class="px-6 py-3 text-right text-on-surface">$1,250,000</td>
+<td class="px-6 py-3 text-right text-status-warning">$350,000</td>
+<td class="px-6 py-3 text-right text-on-surface/70">$85,000</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-muted hover:bg-surface-variant/50 transition-colors group">
+<td class="px-6 py-3 text-secondary-fixed-dim">CC-TC-042</td>
+<td class="px-6 py-3 text-on-surface">Soporte TI 24/7</td>
+<td class="px-6 py-3 text-right text-on-surface">$980,500</td>
+<td class="px-6 py-3 text-right text-status-warning">$420,200</td>
+<td class="px-6 py-3 text-right text-on-surface/70">$110,000</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b border-muted hover:bg-surface-variant/50 transition-colors group">
+<td class="px-6 py-3 text-secondary-fixed-dim">CC-AD-010</td>
+<td class="px-6 py-3 text-on-surface">Administración Central</td>
+<td class="px-6 py-3 text-right text-on-surface">$2,020,400</td>
+<td class="px-6 py-3 text-right text-status-warning">$75,000</td>
+<td class="px-6 py-3 text-right text-on-surface/70">$125,150</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-variant/50 transition-colors group">
+<td class="px-6 py-3 text-secondary-fixed-dim">CC-LG-005</td>
+<td class="px-6 py-3 text-on-surface">Logística y Despacho</td>
+<td class="px-6 py-3 text-right text-on-surface">$850,000</td>
+<td class="px-6 py-3 text-right text-status-warning">$120,000</td>
+<td class="px-6 py-3 text-right text-on-surface/70">$45,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right: Visual Distribution -->
+<div class="bg-surface-card border border-muted rounded-DEFAULT flex flex-col p-6">
+<div class="mb-6 flex justify-between items-start">
+<h3 class="font-headline-md-mobile text-headline-md-mobile text-on-surface">Distribución Costos</h3>
+<span class="material-symbols-outlined text-text-dimmed" data-icon="pie_chart">pie_chart</span>
+</div>
+<!-- Simulated Chart Area -->
+<div class="flex-1 flex flex-col gap-4 justify-center">
+<!-- Bar 1 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-data-mono text-[11px] text-text-dimmed">
+<span>Operaciones (45%)</span>
+<span>$2.1M</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 45%;"></div>
+</div>
+</div>
+<!-- Bar 2 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-data-mono text-[11px] text-text-dimmed">
+<span>Administración (30%)</span>
+<span>$1.4M</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full" style="width: 30%;"></div>
+</div>
+</div>
+<!-- Bar 3 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-data-mono text-[11px] text-text-dimmed">
+<span>Tecnología (25%)</span>
+<span>$1.1M</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-secondary-fixed h-full" style="width: 25%;"></div>
+</div>
+</div>
+<!-- Legend -->
+<div class="mt-4 pt-4 border-t border-muted flex flex-wrap gap-3 font-data-mono text-[10px] text-text-dimmed">
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-primary"></div> Devengado
+                                </div>
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-status-warning"></div> Recargos
+                                </div>
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div> Extra
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

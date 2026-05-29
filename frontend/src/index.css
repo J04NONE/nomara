@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #00DAFF;
+  --color-primary-dark: #00B8D6;
+  --color-primary-light: #66E8FF;
+  --color-secondary: #7C3AED;
+  --color-success: #00F08F;
+  --color-success-dark: #00C478;
+  --color-warning: #FFB347;
+  --color-danger: #FF4D4D;
+  --color-info: #3B82F6;
+
+  --color-background: #0C0F1A;
+  --color-surface: #1A1F2E;
+  --color-surface-hover: #242B3D;
+  --color-surface-active: #2E3650;
+  --color-border: #2A3040;
+  --color-border-light: #353D52;
+  --color-text: #E2E8F0;
+  --color-text-muted: #8B95A9;
+  --color-text-dim: #5A6278;
+
+  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 218, 255, 0.2); }
+  50% { box-shadow: 0 0 16px rgba(0, 218, 255, 0.4); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.2s ease-out;
+}
+
+/* Transitions globales */
+a, button {
+  transition: all 0.15s ease;
+}
