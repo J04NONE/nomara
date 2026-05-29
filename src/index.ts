@@ -11,7 +11,9 @@ import { testConnection, initializeTables } from './config/database';
 const app = express();
 const PORT = process.env['PORT'] ?? 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: process.env['ALLOWED_ORIGIN'] ?? '*',
+}));
 app.use(express.json());
 
 app.get('/health', (_req, res) => {
@@ -33,6 +35,9 @@ app.use(errorHandler);
     console.log(`Nomara API corriendo en http://localhost:${PORT}`);
     console.log(`Health check: http://localhost:${PORT}/health`);
   });
-})();
+})().catch((err) => {
+  console.error('Error crítico al iniciar la base de datos:', err);
+  process.exit(1);
+});
 
 export default app;

@@ -15,7 +15,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction): Promis
   try {
     const dto = req.body as CreateEmpleadoDto;
 
-    if (!dto.tipoDoc || !dto.numDoc || !dto.nombre || !dto.sueldoBase || !dto.fechaIngreso) {
+    if (!dto.tipoDoc || !dto.numDoc || !dto.nombre || dto.sueldoBase === undefined || !dto.fechaIngreso) {
       res.status(400).json({ error: 'Campos requeridos: tipoDoc, numDoc, nombre, sueldoBase, fechaIngreso' });
       return;
     }
