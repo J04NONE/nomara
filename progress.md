@@ -1,37 +1,40 @@
 # progress.md — Registro de Sesión
 
-## Sesión 29-May-2026 — Análisis Completo Pre-Presentación
+## Sesión 29-May-2026 — Sprint completo pre-presentación
 
-### Contexto
-- Deadline: Sábado 30-May-2026, presentación académica 10 minutos
-- Análisis completo: build, tests, todos los archivos fuente backend y frontend
+### Lo que se completó hoy (todo en main ✅)
 
-### Resultados de verificación
-- `npm run build`: PASA ✅
-- `npm test`: 13/13 PASAN ✅  
-- `git status`: main sincronizado, frontend/ untracked
+| PR | Contenido | Estado |
+|----|-----------|--------|
+| #2 | Frontend shell + backend migración PostgreSQL inicial | Mergeado |
+| #3 | Frontend → API real (4 páginas) + seed script | Mergeado |
+| #4 | 7 fixes code review + pipeline Node 22 + Railway CLI container | Mergeado |
 
-### Hallazgos clave guardados en
-- `findings.md`: análisis detallado archivo por archivo
-- `task_plan.md`: plan actualizado abajo (actualizar tras esta sesión)
+### Fixes aplicados (code review exhaustivo)
+- `src/index.ts`: IIFE con .catch(), CORS con ALLOWED_ORIGIN, DB init antes de listen
+- `src/config/database.ts`: Pool max:5, connectionTimeoutMillis:5000
+- `src/routes/empleados.routes.ts`: falsy-zero en sueldoBase
+- `frontend/src/services/api.ts`: URLSearchParams en params
+- `frontend/src/types/index.ts`: union types en CreateEmpleadoDto
+- `frontend/vite.config.ts`: /health en proxy
 
-### Estado del sprint al 29-May-2026
+### Pipeline CI/CD corregido
+- Node 20 → 22 LTS (paridad Railway/CI, Nixpacks soporta hasta 22/23)
+- `npm install -g @railway/cli` → `ghcr.io/railwayapp/cli:latest`
+- `--detach` → `--ci` (bloquea y detecta fallos reales)
+- `npm audit fix`: 0 vulnerabilidades (qs resuelto)
+- `RAILWAY_TOKEN` rotado y actualizado en GitHub Secrets
+- Deploy manual Railway exitoso
 
-| Componente | Estado |
-|-----------|--------|
-| Backend Compliance Engine | ✅ COMPLETO |
-| Backend rutas → PostgreSQL | ✅ COMPLETO |
-| Backend tests | ✅ 13 tests pasan |
-| Backend build | ✅ Sin errores TypeScript |
-| Frontend shell/layout | ✅ COMPLETO |
-| Frontend → API real | ❌ TODO (todo es mock) |
-| DB Neon con datos demo | ❌ TODO (vacía) |
-| Deploy Railway | ❌ TODO (no configurado) |
-| Auth JWT | ❌ TODO (fuera de scope para mañana) |
+### Estado DB
+- Tablas creadas por `initializeTables()` al arrancar ✅
+- **Neon vacía** — falta ejecutar `npm run seed`
 
-### Próximos pasos prioritarios (para hoy 29-May)
-1. Seed Neon con datos de demo (vigencias + empleados)
-2. Conectar frontend pages a la API real (TanStack Query)
-3. Hacer funcional el form "Asignar Turno" → POST /turnos → mostrar segmentos
-4. Commit frontend/ al repo
-5. Configurar Railway + push a main → deploy automático
+---
+
+## Pendiente antes de la presentación
+
+1. [ ] `npm run seed` — poblar Neon con 2 vigencias + 4 empleados
+2. [ ] Railway dashboard → añadir `DATABASE_URL` al servicio nomara
+3. [ ] Verificar URL pública de Railway end-to-end
+4. [ ] Ensayar script demo (ver task_plan.md)
