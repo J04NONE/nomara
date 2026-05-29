@@ -12,11 +12,11 @@ export interface Empleado {
 }
 
 export interface CreateEmpleadoDto {
-  tipoDoc: string
+  tipoDoc: Empleado['tipoDoc']
   numDoc: string
   nombre: string
   sueldoBase: number
-  rol?: string
+  rol?: Empleado['rol']
   fechaIngreso: string
 }
 
