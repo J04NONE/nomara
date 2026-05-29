@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import empleadosRouter from './routes/empleados.routes';
 import turnosRouter from './routes/turnos.routes';
 import vigenciasRouter from './routes/vigencias.routes';
@@ -10,6 +11,7 @@ import { testConnection, initializeTables } from './config/database';
 const app = express();
 const PORT = process.env['PORT'] ?? 3000;
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/health', (_req, res) => {
@@ -24,11 +26,13 @@ app.use('/api/v1/liquidaciones', liquidacionesRouter);
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(PORT, async () => {
+(async () => {
   await testConnection();
   await initializeTables();
-  console.log(`Nomara API corriendo en http://localhost:${PORT}`);
-  console.log(`Health check: http://localhost:${PORT}/health`);
-});
+  app.listen(PORT, () => {
+    console.log(`Nomara API corriendo en http://localhost:${PORT}`);
+    console.log(`Health check: http://localhost:${PORT}/health`);
+  });
+})();
 
 export default app;

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nomara - Shift Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-on-surface": "#2f3035",
+                        "primary-container": "#4da2ff",
+                        "surface-variant": "#333539",
+                        "on-tertiary-fixed-variant": "#004f58",
+                        "surface-bright": "#37393e",
+                        "tertiary-fixed-dim": "#00daf3",
+                        "tertiary": "#00daf3",
+                        "on-tertiary-fixed": "#001f24",
+                        "surface-tint": "#a2c9ff",
+                        "background": "#111318",
+                        "on-primary": "#00315c",
+                        "outline-variant": "#404752",
+                        "error-container": "#93000a",
+                        "status-success": "#00F08F",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#333539",
+                        "on-tertiary-container": "#003c44",
+                        "surface-container-low": "#1a1c20",
+                        "secondary": "#b1c7f2",
+                        "on-primary-fixed-variant": "#004881",
+                        "secondary-fixed-dim": "#b1c7f2",
+                        "status-critical": "#FF4D4D",
+                        "secondary-fixed": "#d6e3ff",
+                        "on-secondary": "#193053",
+                        "surface-container-high": "#282a2e",
+                        "surface-container-lowest": "#0c0e12",
+                        "primary": "#a2c9ff",
+                        "on-surface": "#e2e2e8",
+                        "inverse-surface": "#e2e2e8",
+                        "primary-fixed-dim": "#a2c9ff",
+                        "surface-dim": "#111318",
+                        "on-background": "#e2e2e8",
+                        "on-primary-fixed": "#001c38",
+                        "surface-card": "#12161F",
+                        "tertiary-fixed": "#9cf0ff",
+                        "error": "#ffb4ab",
+                        "status-warning": "#FFB800",
+                        "secondary-container": "#31476b",
+                        "surface-container": "#1e2024",
+                        "on-primary-container": "#003765",
+                        "on-surface-variant": "#c0c7d4",
+                        "outline": "#8a919d",
+                        "border-muted": "#232833",
+                        "tertiary-container": "#00afc3",
+                        "primary-fixed": "#d3e4ff",
+                        "on-tertiary": "#00363d",
+                        "on-secondary-container": "#a0b6e0",
+                        "surface": "#111318",
+                        "on-secondary-fixed-variant": "#31476b",
+                        "on-error-container": "#ffdad6",
+                        "text-dimmed": "#8E97A4",
+                        "inverse-primary": "#0060aa",
+                        "on-secondary-fixed": "#001b3d"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.125rem",
+                        lg: "0.25rem",
+                        xl: "0.5rem",
+                        full: "0.75rem"
+                    },
+                    spacing: {
+                        unit: "4px",
+                        gutter: "16px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px",
+                        "container-max": "1440px"
+                    },
+                    fontFamily: {
+                        "display-lg": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "body-base": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "headline-md-mobile": ["Inter"]
+                    },
+                    fontSize: {
+                        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.08em", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "body-base": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "data-mono": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "headline-md-mobile": ["20px", { lineHeight: "28px", fontWeight: "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for data tables */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.surface-container');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.outline-variant');
+            border-radius: theme('borderRadius.DEFAULT');
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.outline');
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-base min-h-screen flex flex-col md:flex-row overflow-x-hidden">
+<!-- Mobile Top App Bar (Only visible on md:hidden) -->
+<header class="md:hidden bg-surface-container-high dark:bg-surface-container-high border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile h-16 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-primary text-headline-md-mobile font-bold tracking-tight">Nomara</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:bg-surface-variant/50 transition-colors duration-200 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="hover:bg-surface-variant/50 transition-colors duration-200 p-2 rounded-full flex items-center justify-center relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-status-critical rounded-full"></span>
+</button>
+<button class="hover:bg-surface-variant/50 transition-colors duration-200 p-1 rounded-full flex items-center justify-center">
+<img alt="Administrator Avatar" class="w-8 h-8 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYLUltiWr1XLjo758_WeqvkKRUZXywpftY4EqRmOzTNzFGsqVDzL9fzFzEuo2ah6n4VJZ6xIYxdWroOOHzBnpo7v0H-Il8J6Pm0DXeEnzWTSHaUy3OOPosYV8uqLfzC0H_hQYQNH62x8OlsDk-XoH13kPr-wd_uGYx70f7SHB_UW5TjCpRbJXT_ys3Y3d9e5exQeb7f-Ra_86AmCAw3P_oKnqNcVmCuADjjRsfk1vr2gwybK0bvOBcWu76mmnU73F6JVIqXxQPwmU"/>
+</button>
+</div>
+</header>
+<!-- Side Navigation (Visible on md:flex) -->
+<nav class="hidden md:flex flex-col h-screen w-64 bg-surface-container dark:bg-surface-container border-r border-outline-variant py-gutter px-4 sticky top-0 z-40 shrink-0">
+<div class="mb-8 px-2 flex flex-col gap-1">
+<span class="font-display-lg text-primary text-headline-md tracking-tight">Nomara</span>
+<span class="font-label-caps text-label-caps text-text-dimmed">DIAN Regulatory Ready</span>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" data-icon="dashboard">dashboard</span>
+<span class="font-label-caps text-label-caps tracking-wider">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" data-icon="gavel">gavel</span>
+<span class="font-label-caps text-label-caps tracking-wider">Compliance Health</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-secondary-container text-on-secondary-container font-semibold rounded-lg translate-x-1" href="#">
+<span class="material-symbols-outlined fill-icon" data-icon="schedule_send">schedule_send</span>
+<span class="font-label-caps text-label-caps tracking-wider">Shift Management</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" data-icon="groups">groups</span>
+<span class="font-label-caps text-label-caps tracking-wider">Employee Records</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" data-icon="history_edu">history_edu</span>
+<span class="font-label-caps text-label-caps tracking-wider">Audit Logs</span>
+</a>
+</div>
+<div class="mt-auto flex flex-col gap-2 pt-4 border-t border-outline-variant">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="description">description</span>
+<span class="font-label-caps text-label-caps">Documentation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help_outline">help_outline</span>
+<span class="font-label-caps text-label-caps">Support</span>
+</a>
+<button class="mt-4 w-full bg-primary text-on-primary font-label-caps text-label-caps py-2.5 rounded-DEFAULT hover:bg-primary-fixed-dim transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="summarize">summarize</span>
+                Generate Report
+            </button>
+</div>
+</nav>
+<!-- Main Canvas -->
+<main class="flex-1 flex flex-col min-w-0 bg-background relative">
+<!-- Desktop Top App Bar (Search & Actions) -->
+<div class="hidden md:flex bg-surface-container-high dark:bg-surface-container-high border-b border-outline-variant justify-between items-center w-full px-margin-desktop h-16 sticky top-0 z-30">
+<div class="flex items-center gap-4 text-on-surface-variant w-1/3">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full bg-surface-container border border-border-muted rounded-DEFAULT py-1.5 pl-10 pr-4 text-body-base text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-outline-variant" placeholder="Search employee ID, shift code..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:bg-surface-variant/50 transition-colors duration-200 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+</button>
+<button class="hover:bg-surface-variant/50 transition-colors duration-200 p-2 rounded-full flex items-center justify-center relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-status-critical rounded-full"></span>
+</button>
+<button class="hover:bg-surface-variant/50 transition-colors duration-200 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-px h-6 bg-outline-variant mx-2"></div>
+<button class="flex items-center gap-2 hover:bg-surface-variant/50 transition-colors p-1 pr-3 rounded-full border border-transparent hover:border-outline-variant">
+<img alt="Administrator Avatar" class="w-8 h-8 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAer2NZlhAFK-lDeSy3DclbYh0bCtBs17DJuNZEIhuP_5FA9JBZyIJloXrtkWc1bVgAkl74zxYIyksWEGN1oX3kJGpa4BAfn4uY7hJCGAa52-csvqubJmGH1QERa4K1SoBt-Pe_9TV_jRhn45yuFq8zZJSm0RJrWfz81IJHrNPOkEImrnDjoNkoDDLPquI-2cxJSWtpi8W-USLeGZYgGqBp1NGaUoxcMah7pKryOz8D2ye3T1cQjCBVR5btM5nVZsHI92Y-dgTjqb8"/>
+<span class="font-label-caps text-label-caps text-on-surface">SYS-ADMIN</span>
+</button>
+</div>
+</div>
+<!-- Critical Alert Banner -->
+<div class="bg-error-container/20 border-b border-status-critical px-margin-mobile md:px-margin-desktop py-3 flex items-start md:items-center gap-3">
+<span class="material-symbols-outlined text-status-critical shrink-0 mt-0.5 md:mt-0" data-icon="warning">warning</span>
+<div class="flex-1 flex flex-col md:flex-row md:items-center justify-between gap-2">
+<p class="font-body-base text-sm text-on-surface">
+<strong class="text-status-critical font-semibold">Legal Alert:</strong> 3 shifts detected exceeding maximum legal continuous hours (Art 161 CST). Manual review required before payroll lock.
+                </p>
+<button class="font-label-caps text-label-caps text-status-critical border border-status-critical/50 px-3 py-1 rounded hover:bg-status-critical/10 transition-colors whitespace-nowrap self-start md:self-auto">Review Anomalies</button>
+</div>
+</div>
+<div class="p-gutter md:p-margin-desktop flex flex-col gap-6 max-w-container-max mx-auto w-full">
+<!-- Page Header & Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="font-headline-md md:font-display-lg text-headline-md-mobile md:text-headline-md text-on-surface tracking-tight mb-1">Malla Operativa</h1>
+<p class="font-body-base text-text-dimmed">Gestión y segmentación automática de turnos para el periodo actual.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<!-- Filters -->
+<div class="flex items-center bg-surface-card border border-border-muted rounded-DEFAULT p-1">
+<select class="bg-transparent border-none text-on-surface font-body-base text-sm py-1.5 pl-3 pr-8 focus:ring-0 cursor-pointer">
+<option value="all">Todos los Centros (CC)</option>
+<option value="cc101">CC-101 Planta Norte</option>
+<option value="cc102">CC-102 Logística Sur</option>
+</select>
+<div class="w-px h-4 bg-outline-variant mx-1"></div>
+<input class="bg-transparent border-none text-on-surface font-body-base text-sm py-1.5 px-3 focus:ring-0 cursor-pointer [color-scheme:dark]" type="date"/>
+</div>
+<button class="bg-primary text-on-primary font-label-caps text-label-caps px-4 py-2 rounded-DEFAULT hover:bg-primary-fixed-dim transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                        Asignar Turno
+                    </button>
+</div>
+</div>
+<!-- The Malla (Grid) - Complex Shift Table -->
+<div class="bg-surface-card border border-border-muted rounded-lg overflow-hidden flex flex-col">
+<!-- Table Toolbar -->
+<div class="bg-surface-container-high border-b border-border-muted p-3 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> Recargo Nocturno (35%)
+                        </span>
+<span class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-status-warning"></span> Horas Extras (80%)
+                        </span>
+<span class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-outline"></span> Ordinario
+                        </span>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-1 text-outline-variant hover:text-on-surface transition-colors" title="Vista Diaria">
+<span class="material-symbols-outlined text-sm" data-icon="view_day">view_day</span>
+</button>
+<button class="p-1 text-primary hover:text-primary-fixed transition-colors" title="Vista Semanal">
+<span class="material-symbols-outlined text-sm" data-icon="view_week">view_week</span>
+</button>
+</div>
+</div>
+<!-- Table Content Container (Scrollable) -->
+<div class="overflow-x-auto relative">
+<table class="w-full text-left border-collapse min-w-[1000px]">
+<thead>
+<tr class="bg-surface-container-low border-b border-border-muted font-label-caps text-label-caps text-on-surface-variant">
+<th class="py-3 px-4 w-64 sticky left-0 z-20 bg-surface-container-low border-r border-border-muted">Empleado / ID</th>
+<th class="py-3 px-4 w-32 border-r border-border-muted text-center">Turno</th>
+<!-- Time Grid Headers -->
+<th class="py-3 px-1 text-center font-data-mono text-xs w-12 border-r border-border-muted/30">18:00</th>
+<th class="py-3 px-1 text-center font-data-mono text-xs w-12 border-r border-border-muted/30">19:00</th>
+<th class="py-3 px-1 text-center font-data-mono text-xs w-12 border-r border-border-muted/30">20:00</th>
+<th class="py-3 px-1 text-center font-data-mono text-xs w-12 border-r border-border-muted/30">21:00</th>
+<th class="py-3 px-1 text-center font-data-mono text-xs w-12 border-r border-border-muted/30">22:00</th>
+<th class="py-3 px-1 text-center font-data-mono text-xs w-12 border-r border-border-muted/30">23:00</th>
+<!-- Segment Line Header -->
+<th class="py-3 px-0 w-px bg-status-warning/20 relative z-10" title="Corte de Medianoche UTC-5">
+<div class="absolute -top-1 -left-3 text-[10px] text-status-warning font-label-caps bg-surface-card px-1 border border-status-warning/30 rounded">00:00</div>
+</th>
+<th class="py-3 px-1 text-center font-data-mono text-xs w-12 border-r border-border-muted/30">01:00</th>
+<th class="py-3 px-1 text-center font-data-mono text-xs w-12 border-r border-border-muted/30">02:00</th>
+<th class="py-3 px-1 text-center font-data-mono text-xs w-12 border-r border-border-muted/30">03:00</th>
+<th class="py-3 px-1 text-center font-data-mono text-xs w-12 border-r border-border-muted/30">04:00</th>
+<th class="py-3 px-1 text-center font-data-mono text-xs w-12 border-r border-border-muted/30">05:00</th>
+<th class="py-3 px-1 text-center font-data-mono text-xs w-12 border-r border-border-muted/30">06:00</th>
+<th class="py-3 px-4 w-32 border-l border-border-muted text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="font-body-base text-sm">
+<!-- Row 1: Regular Day Shift (ending early) -->
+<tr class="border-b border-border-muted hover:bg-surface-variant/30 transition-colors group">
+<td class="py-3 px-4 sticky left-0 z-20 bg-surface-card group-hover:bg-surface-variant/30 transition-colors border-r border-border-muted">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary font-label-caps border border-outline-variant">MR</div>
+<div>
+<div class="text-on-surface font-medium">Martinez, Roberto</div>
+<div class="text-text-dimmed font-data-mono text-xs">ID: 10045829</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 border-r border-border-muted text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-data-mono bg-surface-container border border-outline-variant text-on-surface">T1: 14:00-22:00</span>
+</td>
+<!-- Timeline Cells -->
+<td class="p-1 relative border-r border-border-muted/30" colspan="4">
+<!-- Shift Block -->
+<div class="absolute inset-y-2 left-0 right-1 bg-outline/20 border border-outline/40 rounded flex items-center px-2 overflow-hidden">
+<span class="text-[10px] font-label-caps text-on-surface-variant truncate">Ordinario (Cierre)</span>
+</div>
+</td>
+<td class="border-r border-border-muted/30"></td>
+<td class="border-r border-border-muted/30"></td>
+<td class="w-px border-r border-dashed border-status-warning/50 relative"></td> <!-- Midnight -->
+<td class="border-r border-border-muted/30"></td>
+<td class="border-r border-border-muted/30"></td>
+<td class="border-r border-border-muted/30"></td>
+<td class="border-r border-border-muted/30"></td>
+<td class="border-r border-border-muted/30"></td>
+<td class="border-r border-border-muted/30"></td>
+<td class="py-3 px-4 border-l border-border-muted text-right">
+<button class="text-outline-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm" data-icon="edit">edit</span></button>
+</td>
+</tr>
+<!-- Row 2: Night Shift Crossing Midnight (The T8 Requirement) -->
+<tr class="border-b border-border-muted bg-surface-variant/10 hover:bg-surface-variant/40 transition-colors group">
+<td class="py-3 px-4 sticky left-0 z-20 bg-surface-card group-hover:bg-surface-variant/40 transition-colors border-r border-border-muted">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-tertiary font-label-caps border border-outline-variant">SJ</div>
+<div>
+<div class="text-on-surface font-medium flex items-center gap-2">
+                                                Salazar, Julia
+                                                <span class="material-symbols-outlined text-[14px] text-tertiary" title="Turno Nocturno">dark_mode</span>
+</div>
+<div class="text-text-dimmed font-data-mono text-xs">ID: 10087422 • CC-101</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 border-r border-border-muted text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-data-mono bg-tertiary/10 border border-tertiary/30 text-tertiary">T8: 22:00-06:00</span>
+</td>
+<!-- Timeline Cells -->
+<td class="border-r border-border-muted/30"></td>
+<td class="border-r border-border-muted/30"></td>
+<td class="border-r border-border-muted/30"></td>
+<td class="border-r border-border-muted/30"></td>
+<!-- Seg A: Before Midnight (22:00 - 00:00) -->
+<td class="p-1 relative border-r border-border-muted/30" colspan="2">
+<div class="absolute inset-y-1 left-1 right-0 bg-tertiary/20 border border-tertiary/40 rounded-l flex flex-col justify-center px-2 overflow-hidden border-r-0 z-10 cursor-pointer hover:bg-tertiary/30 transition-colors">
+<div class="flex justify-between items-center w-full">
+<span class="text-[10px] font-label-caps text-tertiary-fixed-dim truncate">Seg A</span>
+<span class="text-[10px] font-data-mono text-tertiary font-bold">+35% RN</span>
+</div>
+</div>
+</td>
+<!-- Midnight Surgical Line -->
+<td class="w-px border-r-2 border-dashed border-status-warning relative z-20">
+<div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 bg-background border border-status-warning rounded-full flex items-center justify-center">
+<div class="w-1 h-1 bg-status-warning rounded-full"></div>
+</div>
+</td>
+<!-- Seg B: After Midnight (00:00 - 06:00) -->
+<td class="p-1 relative border-r border-border-muted/30" colspan="6">
+<div class="absolute inset-y-1 left-0 right-1 bg-tertiary/20 border border-tertiary/40 rounded-r flex flex-col justify-center px-2 overflow-hidden border-l-0 z-10 cursor-pointer hover:bg-tertiary/30 transition-colors">
+<div class="flex justify-between items-center w-full">
+<span class="text-[10px] font-label-caps text-tertiary-fixed-dim truncate">Seg B (Nuevo Día Legal)</span>
+<span class="text-[10px] font-data-mono text-tertiary font-bold">+35% RN</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 border-l border-border-muted text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="text-status-success hover:text-status-success/80 transition-colors" title="Aprobar Segmentación">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+</button>
+<button class="text-outline-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Complex Shift with Overtime -->
+<tr class="border-b border-border-muted hover:bg-surface-variant/30 transition-colors group">
+<td class="py-3 px-4 sticky left-0 z-20 bg-surface-card group-hover:bg-surface-variant/30 transition-colors border-r border-border-muted">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary font-label-caps border border-outline-variant">AG</div>
+<div>
+<div class="text-on-surface font-medium">Gomez, Andres</div>
+<div class="text-text-dimmed font-data-mono text-xs">ID: 10099312</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 border-r border-border-muted text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-data-mono bg-status-warning/10 border border-status-warning/30 text-status-warning">T8X: 22:00-08:00</span>
+</td>
+<td class="border-r border-border-muted/30"></td>
+<td class="border-r border-border-muted/30"></td>
+<td class="border-r border-border-muted/30"></td>
+<td class="border-r border-border-muted/30"></td>
+<!-- Seg A: 22:00 - 00:00 -->
+<td class="p-1 relative border-r border-border-muted/30" colspan="2">
+<div class="absolute inset-y-2 left-1 right-0 bg-tertiary/20 border border-tertiary/40 rounded-l flex flex-col justify-center px-1 overflow-hidden border-r-0">
+<span class="text-[9px] font-data-mono text-tertiary text-center">+35%</span>
+</div>
+</td>
+<!-- Midnight -->
+<td class="w-px border-r border-dashed border-status-warning/50 relative"></td>
+<!-- Seg B: 00:00 - 06:00 -->
+<td class="p-1 relative border-r border-border-muted/30" colspan="6">
+<div class="absolute inset-y-2 left-0 right-0 bg-tertiary/20 border-y border-tertiary/40 flex flex-col justify-center px-2 overflow-hidden">
+<span class="text-[9px] font-data-mono text-tertiary text-center">+35% RN</span>
+</div>
+</td>
+<!-- Overtime: 06:00 - 08:00 (Visualized partially) -->
+<td class="p-1 relative border-r border-border-muted/30 overflow-visible z-10">
+<div class="absolute inset-y-2 left-0 w-24 bg-status-warning/20 border border-status-warning/40 rounded-r flex flex-col justify-center px-2 shadow-[0_0_8px_rgba(255,184,0,0.2)]">
+<div class="flex justify-between items-center w-full">
+<span class="text-[10px] font-label-caps text-status-warning truncate">HE Diurna</span>
+<span class="text-[10px] font-data-mono text-status-warning font-bold">+25%</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 border-l border-border-muted text-right relative z-20 bg-surface-card group-hover:bg-surface-variant/30">
+<button class="text-status-critical hover:text-status-critical/80 transition-colors" title="Alerta de horas">
+<span class="material-symbols-outlined text-sm" data-icon="warning">warning</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="bg-surface-container-low border-t border-border-muted p-3 flex justify-between items-center text-sm">
+<span class="text-text-dimmed font-data-mono">Mostrando 3 de 142 turnos</span>
+<div class="flex items-center gap-1">
+<button class="px-2 py-1 border border-outline-variant rounded text-on-surface-variant hover:bg-surface-variant disabled:opacity-50" disabled="">Ant</button>
+<button class="px-2 py-1 border border-primary bg-primary/10 text-primary rounded font-data-mono">1</button>
+<button class="px-2 py-1 border border-outline-variant rounded text-on-surface-variant hover:bg-surface-variant font-data-mono">2</button>
+<button class="px-2 py-1 border border-outline-variant rounded text-on-surface-variant hover:bg-surface-variant">Sig</button>
+</div>
+</div>
+</div>
+<!-- Contextual Details Panel (Bento style) -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-2">
+<!-- Breakdown Card -->
+<div class="lg:col-span-2 bg-surface-card border border-border-muted rounded-xl p-5 flex flex-col gap-4 relative overflow-hidden">
+<!-- Tech background accent -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-tertiary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+<h3 class="font-headline-md text-lg text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary" data-icon="calculate">calculate</span>
+                        Auditoría de Segmentación: Turno T8
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container-low border border-outline-variant/50 rounded-lg p-4">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-caps text-text-dimmed">SEGMENTO A (DÍA 1)</span>
+<span class="font-data-mono text-xs bg-surface-container px-2 py-0.5 rounded text-on-surface">22:00 - 00:00</span>
+</div>
+<div class="flex items-end gap-2 mb-1">
+<span class="font-display-lg text-3xl text-on-surface">2.0</span>
+<span class="text-text-dimmed mb-1">hrs</span>
+</div>
+<div class="text-sm text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_upward">arrow_upward</span>
+                                Recargo Nocturno 35% aplicado
+                            </div>
+</div>
+<div class="bg-surface-container-low border border-outline-variant/50 rounded-lg p-4">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-caps text-text-dimmed">SEGMENTO B (DÍA 2)</span>
+<span class="font-data-mono text-xs bg-surface-container px-2 py-0.5 rounded text-on-surface">00:00 - 06:00</span>
+</div>
+<div class="flex items-end gap-2 mb-1">
+<span class="font-display-lg text-3xl text-on-surface">6.0</span>
+<span class="text-text-dimmed mb-1">hrs</span>
+</div>
+<div class="text-sm text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_upward">arrow_upward</span>
+                                Recargo Nocturno 35% aplicado
+                            </div>
+</div>
+</div>
+<div class="mt-auto pt-4 border-t border-border-muted flex justify-between items-center">
+<span class="text-sm text-text-dimmed font-data-mono">Base Legal: Art 160 CST modificado L.2101</span>
+<button class="text-primary text-sm font-semibold hover:underline flex items-center gap-1">
+                            Ver justificación técnica <span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Quick Actions / Info -->
+<div class="bg-surface-card border border-border-muted rounded-xl p-5 flex flex-col gap-4">
+<h3 class="font-label-caps text-text-dimmed mb-2">ESTADO DE MALLA</h3>
+<div class="flex items-center gap-4 mb-2">
+<div class="w-12 h-12 rounded-full border-4 border-status-success flex items-center justify-center relative">
+<span class="font-data-mono text-xs text-on-surface">98%</span>
+</div>
+<div>
+<div class="text-on-surface font-medium">Cobertura Ideal</div>
+<div class="text-xs text-text-dimmed">139/142 turnos asignados</div>
+</div>
+</div>
+<div class="space-y-3 mt-2">
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-status-critical"></span> Conflictos Legales</span>
+<span class="font-data-mono text-status-critical">3</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-status-warning"></span> Alertas de Horas Extras</span>
+<span class="font-data-mono text-status-warning">12</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Turnos Nocturnos</span>
+<span class="font-data-mono text-on-surface">45</span>
+</div>
+</div>
+<button class="mt-auto w-full bg-surface-container hover:bg-surface-variant border border-outline-variant text-on-surface font-label-caps py-2 rounded transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="lock">lock</span>
+                        Bloquear Malla para Nómina
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Navigation (Only visible on md:hidden) -->
+<nav class="md:hidden bg-surface-container-high dark:bg-surface-container-high border-t border-outline-variant fixed bottom-0 w-full z-50 flex justify-around items-center h-16 pb-safe">
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label-caps text-[10px]">Dash</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full bg-primary-container text-on-primary-container" href="#">
+<span class="material-symbols-outlined mb-1 fill-icon" data-icon="schedule_send">schedule_send</span>
+<span class="font-label-caps text-[10px] font-bold">Turnos</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="groups">groups</span>
+<span class="font-label-caps text-[10px]">Emp</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="menu">menu</span>
+<span class="font-label-caps text-[10px]">Más</span>
+</a>
+</nav>
+<!-- Floating Action Button for Mobile -->
+<button class="md:hidden fixed bottom-20 right-4 w-14 h-14 bg-primary text-on-primary rounded-xl shadow-lg flex items-center justify-center z-50 hover:bg-primary-fixed-dim transition-colors active:scale-95">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</body></html>

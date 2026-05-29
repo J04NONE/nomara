@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nomara - Audit Log</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#00daf3",
+                    "secondary-fixed": "#d6e3ff",
+                    "inverse-on-surface": "#2f3035",
+                    "primary-container": "#4da2ff",
+                    "primary": "#a2c9ff",
+                    "on-tertiary-fixed": "#001f24",
+                    "status-success": "#00F08F",
+                    "secondary-container": "#31476b",
+                    "error": "#ffb4ab",
+                    "on-tertiary-fixed-variant": "#004f58",
+                    "on-error": "#690005",
+                    "on-tertiary-container": "#003c44",
+                    "surface-card": "#12161F",
+                    "on-tertiary": "#00363d",
+                    "primary-fixed": "#d3e4ff",
+                    "on-secondary-fixed": "#001b3d",
+                    "on-secondary-container": "#a0b6e0",
+                    "on-secondary-fixed-variant": "#31476b",
+                    "on-primary-fixed": "#001c38",
+                    "on-primary-container": "#003765",
+                    "surface-container-high": "#282a2e",
+                    "surface-container-lowest": "#0c0e12",
+                    "surface-tint": "#a2c9ff",
+                    "status-warning": "#FFB800",
+                    "tertiary-container": "#00afc3",
+                    "primary-fixed-dim": "#a2c9ff",
+                    "tertiary": "#00daf3",
+                    "on-surface-variant": "#c0c7d4",
+                    "secondary-fixed-dim": "#b1c7f2",
+                    "outline": "#8a919d",
+                    "inverse-surface": "#e2e2e8",
+                    "border-muted": "#232833",
+                    "error-container": "#93000a",
+                    "surface-container-highest": "#333539",
+                    "on-primary-fixed-variant": "#004881",
+                    "on-secondary": "#193053",
+                    "surface": "#111318",
+                    "surface-dim": "#111318",
+                    "surface-bright": "#37393e",
+                    "background": "#111318",
+                    "inverse-primary": "#0060aa",
+                    "surface-container-low": "#1a1c20",
+                    "surface-variant": "#333539",
+                    "on-error-container": "#ffdad6",
+                    "on-surface": "#e2e2e8",
+                    "on-primary": "#00315c",
+                    "surface-container": "#1e2024",
+                    "secondary": "#b1c7f2",
+                    "text-dimmed": "#8E97A4",
+                    "status-critical": "#FF4D4D",
+                    "on-background": "#e2e2e8",
+                    "outline-variant": "#404752",
+                    "tertiary-fixed": "#9cf0ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "margin-mobile": "16px",
+                    "container-max": "1440px",
+                    "gutter": "16px",
+                    "margin-desktop": "32px"
+            },
+            "fontFamily": {
+                    "label-caps": ["JetBrains Mono"],
+                    "headline-md-mobile": ["Inter"],
+                    "data-mono": ["JetBrains Mono"],
+                    "display-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-base": ["Inter"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+                    "headline-md-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                    "data-mono": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                    "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "body-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Base styles applied directly to ensure rendering if script fails */
+        body { background-color: #111318; color: #e2e2e8; }
+        
+        /* Custom scrollbar for data tables */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #111318;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #404752;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #8a919d;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-base antialiased flex h-screen overflow-hidden selection:bg-primary/30">
+<!-- SideNavBar (Shared Component) -->
+<aside class="bg-surface-container flex flex-col h-full border-r border-outline-variant py-gutter px-4 docked left-0 w-64 shrink-0 z-40">
+<!-- Header -->
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-10 h-10 rounded-lg bg-surface-card border border-muted flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+</div>
+<div>
+<h2 class="font-headline-md text-[16px] font-semibold text-primary leading-tight">Admin Console</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">DIAN Regulatory Ready</p>
+</div>
+</div>
+<!-- Main Navigation -->
+<nav class="flex-1 flex flex-col gap-1 overflow-y-auto custom-scrollbar pr-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-surface transition-colors">dashboard</span>
+<span class="font-body-base text-body-base">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-surface transition-colors">gavel</span>
+<span class="font-body-base text-body-base">Compliance Health</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-surface transition-colors">schedule_send</span>
+<span class="font-body-base text-body-base">Shift Management</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-surface transition-colors">groups</span>
+<span class="font-body-base text-body-base">Employee Records</span>
+</a>
+<!-- Active State Navigation -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-secondary-container text-on-secondary-container font-semibold translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">history_edu</span>
+<span class="font-body-base text-[16px] leading-6 font-semibold">Audit Logs</span>
+</a>
+</nav>
+<!-- Footer Actions -->
+<div class="mt-auto pt-4 border-t border-outline-variant flex flex-col gap-1">
+<button class="w-full mb-4 bg-primary text-on-primary font-body-base font-semibold py-2 rounded-DEFAULT hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-[0_0_10px_rgba(162,201,255,0.1)]">
+<span class="material-symbols-outlined text-[20px]">description</span>
+                Generate Report
+            </button>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span class="font-body-base text-sm">Documentation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+<span class="font-body-base text-sm">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col h-screen overflow-hidden bg-background relative">
+<!-- TopAppBar (Shared Component) -->
+<header class="bg-surface-container-high flex justify-between items-center w-full px-margin-desktop h-16 sticky top-0 z-50 border-b border-outline-variant shrink-0">
+<!-- Brand Logo -->
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-display-lg font-bold text-primary tracking-tight">Nomara</span>
+<span class="px-2 py-0.5 rounded-DEFAULT bg-surface-variant text-on-surface-variant font-label-caps text-[10px] uppercase tracking-wider border border-border-muted">System Environment</span>
+</div>
+<!-- Right Actions -->
+<div class="flex items-center gap-6">
+<!-- Search Bar on Right -->
+<div class="relative hidden md:block w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full bg-surface-card border border-muted text-on-surface rounded-DEFAULT py-1.5 pl-10 pr-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 text-sm placeholder-outline transition-all" placeholder="Search entity ID..." type="text"/>
+</div>
+<!-- Trailing Icons -->
+<div class="flex items-center gap-2 border-l border-outline-variant pl-6">
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-primary hover:bg-surface-variant/50 transition-colors duration-200 relative group">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-status-warning rounded-full border border-surface-container-high"></span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-primary hover:bg-surface-variant/50 transition-colors duration-200">
+<span class="material-symbols-outlined text-[20px]">account_balance</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-primary hover:bg-surface-variant/50 transition-colors duration-200">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+<!-- Profile Avatar -->
+<div class="ml-4 w-8 h-8 rounded-full bg-secondary-container border border-primary/30 flex items-center justify-center overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all">
+<span class="material-symbols-outlined text-primary text-[20px]">shield_person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas Area -->
+<main class="flex-1 overflow-y-auto custom-scrollbar p-margin-desktop">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-8 border-b border-muted pb-6">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<h1 class="font-headline-md text-headline-md text-on-surface">System Audit Log</h1>
+<span class="flex items-center gap-1 px-2.5 py-1 rounded border border-status-success/30 bg-status-success/10 text-status-success font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                            Append-Only Record
+                        </span>
+</div>
+<p class="font-body-base text-body-base text-text-dimmed max-w-2xl">
+                        Cryptographically linked register of all manual adjustments to compliance parameters, shift schedules, and employee records. This data is strictly read-only for UGPP auditing purposes.
+                    </p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-surface-card border border-muted text-on-surface rounded-DEFAULT font-body-base text-sm hover:border-outline transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export CSV
+                    </button>
+</div>
+</div>
+<!-- Filters Bar (Glassmorphism hint for structure without heavy shadow) -->
+<div class="bg-surface-card/80 backdrop-blur-md border border-muted rounded-lg p-4 mb-6 flex flex-wrap items-end gap-4 shadow-sm">
+<div class="flex flex-col gap-1.5 flex-1 min-w-[200px]">
+<label class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Date Range (UTC-5)</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">calendar_today</span>
+<input class="w-full bg-surface-dim border border-muted text-on-surface font-data-mono text-data-mono rounded-DEFAULT py-2 pl-9 pr-3 cursor-pointer hover:border-outline transition-colors" readonly="" type="text" value="2023-10-24 00:00 - 2023-10-25 23:59"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 flex-1 min-w-[200px]">
+<label class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Administrator</label>
+<div class="relative">
+<select class="w-full bg-surface-dim border border-muted text-on-surface font-body-base text-sm rounded-DEFAULT py-2 pl-3 pr-8 appearance-none hover:border-outline transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50">
+<option>All System Administrators</option>
+<option>adm_jrodriguez</option>
+<option>sys_compliance_bot</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none">arrow_drop_down</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 flex-1 min-w-[200px]">
+<label class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Employee ID / Target</label>
+<input class="w-full bg-surface-dim border border-muted text-on-surface font-data-mono text-sm rounded-DEFAULT py-2 px-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 placeholder-outline" placeholder="e.g. EMP-8834" type="text"/>
+</div>
+<button class="bg-primary text-on-primary font-body-base font-semibold py-2 px-6 rounded-DEFAULT hover:opacity-90 transition-opacity h-[40px]">
+                    Apply Filters
+                </button>
+</div>
+<!-- Data Table Container (Fixed grid approach, no zebra stripes, surgical dividers) -->
+<div class="bg-surface-card border border-muted rounded-lg overflow-hidden flex flex-col">
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse min-w-[1000px]">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="py-3 px-4 font-label-caps text-label-caps text-outline uppercase whitespace-nowrap sticky top-0 bg-surface-container-low">Timestamp (UTC-5)</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-outline uppercase whitespace-nowrap sticky top-0 bg-surface-container-low">Admin User</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-outline uppercase whitespace-nowrap sticky top-0 bg-surface-container-low">Target Entity</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-outline uppercase whitespace-nowrap sticky top-0 bg-surface-container-low">Field Modified</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-outline uppercase whitespace-nowrap sticky top-0 bg-surface-container-low">Prior State</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-outline uppercase whitespace-nowrap sticky top-0 bg-surface-container-low">Committed State</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-outline uppercase sticky top-0 bg-surface-container-low w-[30%]">Mandatory Justification</th>
+</tr>
+</thead>
+<tbody class="font-body-base text-sm divide-y divide-muted">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-variant/20 transition-colors group">
+<td class="py-3 px-4 font-data-mono text-data-mono text-on-surface-variant whitespace-nowrap">2023-10-25 14:32:01</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-caps text-[10px]">JR</span>
+<span class="text-on-surface font-medium">adm_jrodriguez</span>
+</div>
+</td>
+<td class="py-3 px-4 font-data-mono text-primary">EMP-10442</td>
+<td class="py-3 px-4 text-on-surface">Shift_End_Time</td>
+<td class="py-3 px-4 font-data-mono text-text-dimmed line-through decoration-error/50">2023-10-24 18:00:00</td>
+<td class="py-3 px-4 font-data-mono text-status-success">2023-10-24 19:30:00</td>
+<td class="py-3 px-4 text-on-surface-variant text-xs leading-relaxed max-w-xs pr-4 border-l border-muted bg-surface-container-lowest/50 group-hover:bg-transparent">
+<span class="block bg-surface-dim border border-muted p-2 rounded text-text-dimmed">Empleado requerido para cierre de caja por contingencia operativa en sucursal norte. Autorizado por gerencia regional.</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-variant/20 transition-colors group">
+<td class="py-3 px-4 font-data-mono text-data-mono text-on-surface-variant whitespace-nowrap">2023-10-25 11:15:44</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-label-caps text-[10px]">MC</span>
+<span class="text-on-surface font-medium">adm_mcastillo</span>
+</div>
+</td>
+<td class="py-3 px-4 font-data-mono text-primary">EMP-09211</td>
+<td class="py-3 px-4 text-on-surface">Surcharge_Type</td>
+<td class="py-3 px-4 font-data-mono text-text-dimmed"><span class="px-1.5 py-0.5 rounded border border-outline bg-surface-variant text-xs">NOCTURNO_ORD</span></td>
+<td class="py-3 px-4 font-data-mono text-status-warning"><span class="px-1.5 py-0.5 rounded border border-status-warning/50 bg-status-warning/10 text-xs">NOCTURNO_FEST</span></td>
+<td class="py-3 px-4 text-on-surface-variant text-xs leading-relaxed max-w-xs pr-4 border-l border-muted bg-surface-container-lowest/50 group-hover:bg-transparent">
+<span class="block bg-surface-dim border border-muted p-2 rounded text-text-dimmed">Corrección de recargo. El turno inició el domingo a las 22:00, el sistema no aplicó festivo a la fracción dominical.</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-variant/20 transition-colors group bg-error/5 border-l-2 border-l-status-critical">
+<td class="py-3 px-4 font-data-mono text-data-mono text-on-surface-variant whitespace-nowrap">2023-10-25 09:02:12</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-surface-variant text-outline flex items-center justify-center"><span class="material-symbols-outlined text-[14px]">smart_toy</span></span>
+<span class="text-on-surface font-medium">sys_compliance_bot</span>
+</div>
+</td>
+<td class="py-3 px-4 font-data-mono text-primary">SHIFT_GRP_4A</td>
+<td class="py-3 px-4 text-on-surface">Max_Consecutive_Hours</td>
+<td class="py-3 px-4 font-data-mono text-text-dimmed">12</td>
+<td class="py-3 px-4 font-data-mono text-status-success">10</td>
+<td class="py-3 px-4 text-on-surface-variant text-xs leading-relaxed max-w-xs pr-4 border-l border-muted bg-surface-container-lowest/50 group-hover:bg-transparent">
+<span class="block bg-surface-dim border border-muted p-2 rounded text-text-dimmed font-data-mono text-[11px] text-status-critical/80">AUTO-RESOLVE: Violación de regla Art.161 CST. Reducción forzada de malla horaria.</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-variant/20 transition-colors group">
+<td class="py-3 px-4 font-data-mono text-data-mono text-on-surface-variant whitespace-nowrap">2023-10-24 16:45:00</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-caps text-[10px]">JR</span>
+<span class="text-on-surface font-medium">adm_jrodriguez</span>
+</div>
+</td>
+<td class="py-3 px-4 font-data-mono text-primary">EMP-11005</td>
+<td class="py-3 px-4 text-on-surface">Leave_Status</td>
+<td class="py-3 px-4 font-data-mono text-text-dimmed">ACTIVE_DUTY</td>
+<td class="py-3 px-4 font-data-mono text-status-warning">MEDICAL_LEAVE</td>
+<td class="py-3 px-4 text-on-surface-variant text-xs leading-relaxed max-w-xs pr-4 border-l border-muted bg-surface-container-lowest/50 group-hover:bg-transparent">
+<span class="block bg-surface-dim border border-muted p-2 rounded text-text-dimmed">Incapacidad médica radicada EPS Sura. Folio adjunto en expediente digital. Reposo de 3 días.</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="bg-surface-container-low border-t border-outline-variant px-4 py-3 flex items-center justify-between">
+<span class="font-body-base text-sm text-outline">Showing 1 to 4 of 248 entries</span>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded border border-muted bg-surface-card text-outline flex items-center justify-center hover:text-on-surface hover:border-outline disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded border border-primary bg-primary/10 text-primary font-data-mono text-sm flex items-center justify-center">1</button>
+<button class="w-8 h-8 rounded border border-muted bg-surface-card text-outline font-data-mono text-sm flex items-center justify-center hover:text-on-surface hover:border-outline">2</button>
+<button class="w-8 h-8 rounded border border-muted bg-surface-card text-outline font-data-mono text-sm flex items-center justify-center hover:text-on-surface hover:border-outline">3</button>
+<span class="text-outline px-1">...</span>
+<button class="w-8 h-8 rounded border border-muted bg-surface-card text-outline flex items-center justify-center hover:text-on-surface hover:border-outline">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Compliance Note -->
+<div class="mt-8 text-center flex items-center justify-center gap-2 text-outline font-data-mono text-xs opacity-70">
+<span class="material-symbols-outlined text-[14px]">policy</span>
+<span>Data stored in WORM (Write Once Read Many) compliant volume. Digest Hash: a8f7...9b2e</span>
+</div>
+</main>
+</div>
+</body></html>
