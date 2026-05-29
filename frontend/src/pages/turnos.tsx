@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Clock, Plus, Moon, Sun, Calendar, AlertCircle, Loader2 } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
@@ -34,6 +34,9 @@ export function TurnosPage() {
   const [selectedEmpleado, setSelectedEmpleado] = useState('')
   const [fechaInicio, setFechaInicio] = useState('')
   const [fechaFin, setFechaFin] = useState('')
+  
+  // NUEVOS ESTADO
+  const [previewData, setPreviewData] = useState<{ excedeJornada: boolean; totalHoras: number } | null>(null)
 
   const queryClient = useQueryClient()
 
@@ -55,6 +58,26 @@ export function TurnosPage() {
       setSelectedEmpleado(''); setFechaInicio(''); setFechaFin('')
     },
   })
+ 
+  // EFECTO DE SIMULACIÓN Y COMPLIANCE EN TIEMPO REAL
+  useEffect(() => {
+    if (fechaInicio && fechaFin) {
+      const inicio = new Date(fechaInicio).getTime()
+      const fin = new Date(fechaFin).getTime()
+      const horas = (fin - inicio) / (1000 * 60 * 60)
+
+      if (horas > 0) {
+        setPreviewData({
+          excedeJornada: horas > 8, // Límite legal configurable
+          totalHoras: Number(horas.toFixed(1))
+        })
+      } else {
+        setPreviewData(null)
+      }
+    } else {
+      setPreviewData(null)
+    }
+  }, [fechaInicio, fechaFin])
 
   const empleadosActivos = empleados.filter((e) => e.estado === 'ACTIVO')
 
@@ -105,17 +128,41 @@ export function TurnosPage() {
                   <Input type="datetime-local" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} />
                 </div>
               </div>
+
+              {/*NUEVO: PANEL DE ALERTAS DE COMPLIANCE */}
+              {previewData && (
+                <div className={`p-4 rounded-lg border flex flex-col gap-1 transition-all duration-300 ${previewData.totalHoras <= 0 ? 'bg-danger/10 border-danger/30 text-danger' : previewData.excedeJornada ? 'bg-warning/10 border-warning/30 text-warning' : 'bg-success/10 border-success/30 text-success'}`}>
+                  <div className="flex items-center gap-2">
+                    <AlertCircle className="h-5 w-5" />
+                    <span className="font-bold text-sm">
+                      {previewData.totalHoras <= 0 
+                        ? 'Error: Fechas inconsistentes' 
+                        : previewData.excedeJornada 
+                          ? 'Alerta Compliance: Excede límite legal (8h)' 
+                          : 'Turno conforme a la ley'}
+                    </span>
+                  </div>
+                  {previewData.totalHoras > 0 && (
+                    <p className="text-xs opacity-80 font-mono">
+                      Total a programar: {previewData.totalHoras} horas.
+                    </p>
+                  )}
+                </div>
+              )}
+
               {crearTurnoMutation.isError && (
                 <p className="text-sm text-danger">{crearTurnoMutation.error?.message}</p>
               )}
+              
               <Button
-                className="w-full"
-                disabled={crearTurnoMutation.isPending || !selectedEmpleado || !fechaInicio || !fechaFin}
+                className={`w-full ${previewData?.excedeJornada ? 'bg-warning hover:bg-warning/80 text-warning-foreground' : ''}`}
+                // El botón se desactiva si faltan datos, si está cargando, o si la hora total es negativa/cero
+                disabled={crearTurnoMutation.isPending || !selectedEmpleado || !fechaInicio || !fechaFin || (previewData && previewData.totalHoras <= 0)}
                 onClick={() => crearTurnoMutation.mutate({ empleadoId: selectedEmpleado, horaEntrada: fechaInicio, horaSalida: fechaFin })}
               >
                 {crearTurnoMutation.isPending
                   ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Procesando...</>
-                  : 'Asignar Turno'}
+                  : previewData?.excedeJornada ? 'Guardar Turno con Excepción' : 'Asignar Turno'}
               </Button>
               <p className="text-xs text-text-dim text-center">
                 El motor de compliance segmentará automáticamente el turno según la normativa colombiana.
